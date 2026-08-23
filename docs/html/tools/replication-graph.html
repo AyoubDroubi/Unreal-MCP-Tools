@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Replication Graph — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Specialized Game Systems</div>
+<div class="top"><div class="meta">
+<span class="badge">official-system</span>
+<span class="badge">5.8</span>
+<span class="badge">Beta plugin</span>
+</div><span class="badge priority">High for many replicated actors/connections</span></div>
+<h1>Replication Graph</h1>
+<p class="lead">Persistent replication-list graph that scales server relevancy work for large numbers of Actors and clients.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Reduces per-connection actor relevancy cost</li><li>Custom spatial/semantic replication nodes</li><li>Proven large-scale design</li><li>Good bridge when generic replication becomes CPU-bound</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Use only after profiling shows replication-list generation is a bottleneck; Codex can help implement/test custom nodes.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Profile server replication cost first.</li><li>Group actors by spatial/semantic behavior.</li><li>Configure a custom Replication Driver.</li><li>Create focused custom nodes only where needed.</li><li>Measure CPU/bandwidth with representative clients.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Adds networking architecture complexity and the plugin is marked Beta; splitscreen limitations are documented.</section>
+<h2>Adoption decision</h2>
+<p><strong>High for many replicated actors/connections</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/replication-graph-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/replication-graph-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

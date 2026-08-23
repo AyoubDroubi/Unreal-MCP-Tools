@@ -1,6 +1,6 @@
 # Game Dev Toolbox
 
-This catalog contains **70 separate guides** covering tools, repositories, Unreal systems and development methods that materially improve a Blueprint-heavy UE workflow.
+This catalog contains **91 separate guides** covering tools, repositories, Unreal systems and development methods that materially improve a Blueprint-heavy UE workflow.
 
 Open `docs/html/index.html` in a browser for the visual catalog.
 
@@ -31,3 +31,4 @@ python scripts/game_dev_toolbox.py recommend "multiplayer blueprint debugging"
 - **Assets & Pipeline** — 9 guides
 - **Source Control & CI** — 11 guides
 - **Gameplay Architecture** — 12 guides
+- **Specialized Game Systems** — 21 guides

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MetaSound Builder API — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Specialized Game Systems</div>
+<div class="top"><div class="meta">
+<span class="badge">official-api</span>
+<span class="badge">5.8</span>
+<span class="badge">Beta</span>
+</div><span class="badge priority">High for audio automation</span></div>
+<h1>MetaSound Builder API</h1>
+<p class="lead">Blueprint/C++ API for procedurally creating and modifying MetaSound Sources/Patches and graph connections.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Automatable audio authoring</li><li>Can create assets from Editor Utility Blueprints</li><li>Runtime/in-memory generation</li><li>Excellent candidate for Codex-native audio tooling</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>This is the preferred engine-native foundation for future MetaSound MCP tools instead of UI automation.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Use the Builder subsystem for in-memory/runtime generation.</li><li>Use the Editor subsystem for asset authoring.</li><li>Wrap repetitive project patterns in deterministic helpers.</li><li>Audition changes, then serialize explicitly.</li><li>Verify documented unsupported graph features before relying on them.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> The API is Beta and has documented limitations; pin to UE 5.8 and smoke-test after engine upgrades.</section>
+<h2>Adoption decision</h2>
+<p><strong>High for audio automation</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/metasound-builder-api-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/metasound-builder-api-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

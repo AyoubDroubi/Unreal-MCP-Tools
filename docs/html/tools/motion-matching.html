@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion Matching / Pose Search — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Specialized Game Systems</div>
+<div class="top"><div class="meta">
+<span class="badge">official-system</span>
+<span class="badge">5.8</span>
+<span class="badge">Official plugin</span>
+</div><span class="badge priority">Evaluate for high-fidelity locomotion</span></div>
+<h1>Motion Matching / Pose Search</h1>
+<p class="lead">Query-driven pose selection from animation databases as an alternative to large hand-authored locomotion state machines.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Responsive locomotion</li><li>Less transition-graph authoring</li><li>Scales by adding quality animation data</li><li>Includes tuning/debug tooling</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Use as a deliberate animation architecture, not an automatic replacement for every state machine.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Enable Pose Search.</li><li>Define a schema and pose database.</li><li>Feed movement/query features.</li><li>Tune cost weights with representative gameplay.</li><li>Profile database/query cost and debug selections.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Quality depends heavily on animation coverage/data preparation; a sparse database will not be rescued by code.</section>
+<h2>Adoption decision</h2>
+<p><strong>Evaluate for high-fidelity locomotion</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/motion-matching-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/motion-matching-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Iris Replication System — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Specialized Game Systems</div>
+<div class="top"><div class="meta">
+<span class="badge">official-system</span>
+<span class="badge">5.8</span>
+<span class="badge">Experimental</span>
+</div><span class="badge priority">Evaluate for ambitious multiplayer</span></div>
+<h1>Iris Replication System</h1>
+<p class="lead">Opt-in next-generation replication system designed for larger worlds/player counts with shared work, filtering and prioritization.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Replication scalability</li><li>Filtering/prioritization APIs</li><li>Parallel/shared replication work</li><li>Existing replicated properties/RPCs remain largely compatible</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Codex must not flip a project to Iris as a casual optimization; migration needs architecture review and measured validation.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>First build correct authoritative gameplay with normal replication.</li><li>Profile real network/server limits.</li><li>Evaluate Iris on a dedicated branch.</li><li>Migrate unsupported/custom behaviors deliberately.</li><li>Run multiplayer/Gauntlet/Network Insights regression suites.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Epic marks Iris Experimental in UE 5.8; use caution for shipping and verify all project-specific replication behaviors.</section>
+<h2>Adoption decision</h2>
+<p><strong>Evaluate for ambitious multiplayer</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/introduction-to-iris-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/introduction-to-iris-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

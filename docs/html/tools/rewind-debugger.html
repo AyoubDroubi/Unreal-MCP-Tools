@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rewind Debugger — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Specialized Game Systems</div>
+<div class="top"><div class="meta">
+<span class="badge">official-tool</span>
+<span class="badge">5.8</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">Must adopt for animation-heavy games</span></div>
+<h1>Rewind Debugger</h1>
+<p class="lead">Records PIE gameplay and lets developers scrub backward through animation/gameplay traces to inspect what actually happened.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Time-travel style debugging</li><li>Animation Blueprint tracks</li><li>Variables/notifies/poses over time</li><li>Excellent for intermittent animation bugs</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Use trace findings as evidence when Codex edits animation logic instead of describing the bug from memory.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Enable Animation Insights.</li><li>Open Rewind Debugger.</li><li>Record the failing gameplay segment.</li><li>Pause and select the target object.</li><li>Scrub tracks and inspect transitions/variables/poses.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Enable Pose Watch/trace data intentionally; recording everything can add overhead and noise.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt for animation-heavy games</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/animation-rewind-debugger-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/animation-rewind-debugger-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

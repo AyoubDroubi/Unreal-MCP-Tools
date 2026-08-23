@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Behavior Trees &amp; Blackboards — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Specialized Game Systems</div>
+<div class="top"><div class="meta">
+<span class="badge">official-system</span>
+<span class="badge">5.8</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">High for AI</span></div>
+<h1>Behavior Trees &amp; Blackboards</h1>
+<p class="lead">Event-driven decision trees backed by Blackboard state for scalable NPC behavior.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Visual AI decision flow</li><li>Reusable tasks/services/decorators</li><li>Blackboard-driven state</li><li>Built-in runtime debugging</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Codex can author Tasks/Services and review graph complexity; future MCP readers should expose tree nodes and Blackboard keys.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Define a small Blackboard vocabulary.</li><li>Build branches around high-level decisions.</li><li>Keep Tasks focused and reusable.</li><li>Use Services sparingly for periodic updates.</li><li>Debug with the live Behavior Tree and Gameplay Debugger.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Do not turn the Blackboard into a global dumping ground or run expensive Services every tick.</section>
+<h2>Adoption decision</h2>
+<p><strong>High for AI</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/behavior-trees-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/behavior-trees-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>
