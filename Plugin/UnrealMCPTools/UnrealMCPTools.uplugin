@@ -1,0 +1,31 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "0.1.0",
+  "FriendlyName": "Unreal MCP Tools",
+  "Description": "Production-focused MCP toolsets for safe Unreal Engine project inspection, Blueprint graph editing, validation, and Codex workflows.",
+  "Category": "AI",
+  "CreatedBy": "Ayoub Droubi",
+  "CreatedByURL": "https://github.com/AyoubDroubi",
+  "DocsURL": "https://github.com/AyoubDroubi/Unreal-MCP-Tools",
+  "CanContainContent": false,
+  "IsBetaVersion": true,
+  "Installed": false,
+  "Modules": [
+    {
+      "Name": "UnrealMCPTools",
+      "Type": "Editor",
+      "LoadingPhase": "PostEngineInit"
+    }
+  ],
+  "Plugins": [
+    {
+      "Name": "ModelContextProtocol",
+      "Enabled": true
+    },
+    {
+      "Name": "ToolsetRegistry",
+      "Enabled": true
+    }
+  ]
+}
