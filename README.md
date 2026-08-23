@@ -87,6 +87,47 @@ Change these under **Editor Preferences / Project settings → Plugins → Unrea
 
 See [docs/TOOL_CATALOG.md](docs/TOOL_CATALOG.md) for exact behavior and operating constraints.
 
+## Game Dev Toolbox
+
+The repository also contains a curated **91-guide Game Dev Toolbox** for a Blueprint-heavy UE5 workflow. Every tool, repository, Unreal subsystem or engineering method gets its **own generated HTML guide** with:
+
+- what it solves and when it is worth adopting
+- recommended setup / operating workflow
+- its role in a Codex + MCP workflow
+- version/status notes and adoption cautions
+- a source link for verification
+
+The catalog is split into nine independent areas:
+
+- AI & Automation
+- Blueprint Productivity
+- Developer Environment
+- Testing & QA
+- Debugging & Profiling
+- Assets & Pipeline
+- Source Control & CI
+- Gameplay Architecture
+- Specialized Game Systems
+
+Open `docs/html/index.html` for the searchable browser catalog. Individual pages live under `docs/html/tools/`.
+
+The source of truth is `catalog/categories/*.json`; do not hand-maintain the generated HTML. Regenerate and verify it with:
+
+```bash
+python scripts/generate_toolbox.py
+python scripts/verify_toolbox.py
+```
+
+You can also query the catalog from a terminal or let Codex use it as a local recommendation source:
+
+```bash
+python scripts/game_dev_toolbox.py list
+python scripts/game_dev_toolbox.py show official-unreal-mcp
+python scripts/game_dev_toolbox.py recommend "multiplayer blueprint debugging"
+```
+
+The adoption hierarchy is deliberate: **Unreal-native deterministic APIs first → official UE MCP toolsets → our MCP extensions for missing capabilities → mature external tools after version/license review → UI automation only when no native API exists → direct `.uasset` mutation only for specialized offline tooling.**
+
 ## Quick start
 
 1. Use **Unreal Engine 5.8 or newer**.
@@ -144,7 +185,7 @@ See [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md).
 
 ## Current verification status
 
-The repository contains static checks for plugin layout, generated-header ordering, tool registration markers, docs, and accidental Unreal build artifacts.
+The repository contains static checks for plugin layout, generated-header ordering, tool registration markers, docs, and accidental Unreal build artifacts. The Game Dev Toolbox has its own generator/verifier that checks catalog shape, unique IDs, HTTPS sources, HTML presence, page titles and index linkage.
 
 A real Unreal Editor build is still the authoritative compatibility test because Unreal headers/toolset APIs are engine-version-specific. Before production use, build the plugin in the exact engine version used by the game and exercise the smoke workflow in [docs/INSTALLATION.md](docs/INSTALLATION.md).
 
@@ -165,10 +206,13 @@ A real Unreal Editor build is still the authoritative compatibility test because
 
 ```text
 Plugin/UnrealMCPTools/   Unreal Editor plugin copied into a target project
-docs/                    architecture, safety, tool catalog, Codex workflow
-templates/               reusable AGENTS.md guidance for game repositories
-scripts/                 installation and static verification helpers
-.github/workflows/       repository checks
+catalog/categories/      source-of-truth Game Dev Toolbox definitions
+catalog/                  generated consolidated machine-readable catalog
+docs/                     architecture, safety, tool catalog, Codex workflow
+docs/html/                generated searchable HTML toolbox + one HTML file per guide
+templates/                reusable AGENTS.md guidance for game repositories
+scripts/                  install, generation, catalog query and verification helpers
+.github/workflows/        repository checks + HTML toolbox generation
 ```
 
 ## Contributing
