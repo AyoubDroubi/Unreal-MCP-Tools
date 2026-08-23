@@ -1,4 +1,4 @@
-#include "UnrealMCPBlueprintInternal.h"
+#include "UnrealMCPBlueprintInternalDecls.h"
 
 FMCPToolResult UUnrealMCPBlueprintToolset::AddCallFunctionNode(
     const FString& asset_path,
