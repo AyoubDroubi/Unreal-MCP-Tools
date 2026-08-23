@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unreal Collaboration Strategy: Git LFS + Locks + Short-Lived Branches — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Source Control &amp; CI</div>
+<div class="top"><div class="meta">
+<span class="badge">method</span>
+<span class="badge">all</span>
+<span class="badge">Recommended pattern</span>
+</div><span class="badge priority">Must adopt with Git</span></div>
+<h1>Unreal Collaboration Strategy: Git LFS + Locks + Short-Lived Branches</h1>
+<p class="lead">A practical team policy for binary Unreal content: LFS storage, explicit locks for non-mergeable assets, small branches and frequent synchronization.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Reduces conflicting .uasset/.umap edits</li><li>Keeps binary history out of normal Git object storage</li><li>Makes ownership of currently edited assets visible</li><li>Encourages smaller, reviewable changes</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Before modifying binary assets, Codex should inspect source-control status/locks and avoid parallel edits to the same asset.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Track Unreal binary assets with Git LFS before adding them.</li><li>Lock high-conflict binary assets before editing.</li><li>Pull/rebase before starting significant asset work.</li><li>Keep branches/tasks narrow and integrate frequently.</li><li>Never resolve a binary merge by guessing; choose one asset revision or merge using Unreal-aware tooling when supported.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> LFS does not make binary assets mergeable. Coordination and locking remain necessary.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt with Git</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://learn.microsoft.com/en-us/azure/devops/repos/git/manage-large-files?view=azure-devops" target="_blank" rel="noreferrer">https://learn.microsoft.com/en-us/azure/devops/repos/git/manage-large-files?view=azure-devops</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

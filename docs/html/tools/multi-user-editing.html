@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multi-User Editing — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Source Control &amp; CI</div>
+<div class="top"><div class="meta">
+<span class="badge">official-tool</span>
+<span class="badge">5.8</span>
+<span class="badge">Beta</span>
+</div><span class="badge priority">Optional collaboration accelerator</span></div>
+<h1>Multi-User Editing</h1>
+<p class="lead">Connects multiple Unreal Editor instances into a shared live editing session for real-time collaborative content work.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Multiple people can work together in the same world</li><li>Immediate transaction synchronization</li><li>Useful for review sessions, level dressing and collaborative iteration</li><li>Works on top of a defined source-control revision</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Mostly a human collaboration tool; Codex should understand that the live session does not replace source control and should avoid conflicting automated writes during a session.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Make every participant sync the exact same project revision and engine version.</li><li>Launch/join a short-lived Multi-User session on LAN/VPN.</li><li>Collaborate live.</li><li>At session end, persist and commit the agreed changes through normal source control.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Epic explicitly positions Multi-User Editing as an addition to source control, not a replacement. Keep sessions short-lived and start from the same revision.</section>
+<h2>Adoption decision</h2>
+<p><strong>Optional collaboration accelerator</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/multi-user-editing-overview-for-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/multi-user-editing-overview-for-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

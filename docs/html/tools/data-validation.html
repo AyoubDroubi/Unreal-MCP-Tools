@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Validation — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Testing &amp; QA</div>
+<div class="top"><div class="meta">
+<span class="badge">official-tool</span>
+<span class="badge">5.8</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">Must adopt</span></div>
+<h1>Data Validation</h1>
+<p class="lead">Built-in validation framework for naming, budgets, dependency rules and project-specific asset constraints.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Catches bad assets on save/CI</li><li>Supports custom validators</li><li>Can validate dependencies</li><li>Ideal guardrail for AI-authored content</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>After asset changes, run validators and repair failures before saving/committing.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Define UEditorValidatorBase validators.</li><li>Run validation on save and pre-submit.</li><li>Use DataValidation commandlet in CI.</li><li>Make validation failures block merges for critical rules.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Keep validators deterministic and actionable; avoid noisy warnings that teams learn to ignore.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/data-validation-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/data-validation-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Azure DevOps CI for Unreal — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Source Control &amp; CI</div>
+<div class="top"><div class="meta">
+<span class="badge">method</span>
+<span class="badge">all</span>
+<span class="badge">Recommended pattern</span>
+</div><span class="badge priority">High when Azure hosts the game repo</span></div>
+<h1>Azure DevOps CI for Unreal</h1>
+<p class="lead">Use an Azure Pipelines self-hosted build machine with Unreal installed to run validation, UBT/UAT, cook, package and test jobs.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Keeps the Unreal build environment under your control</li><li>Machine-level engine/cache state persists across jobs</li><li>Fits Azure Repos and branch policies</li><li>Can publish packaged builds/test artifacts automatically</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Codex can author/maintain azure-pipelines.yml and project build scripts, while engine credentials/signing secrets stay in secure variables.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Provision a dedicated self-hosted Windows agent with the exact Unreal version/toolchain.</li><li>Checkout Git LFS correctly.</li><li>Run lightweight validation first, then UBT/UAT build/cook/test stages.</li><li>Cache/use shared DDC where appropriate.</li><li>Publish logs, test reports and packaged artifacts; gate protected branches on required jobs.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Microsoft-hosted agents are usually a poor fit for large Unreal builds because the engine/toolchain/cache is heavy; prefer self-hosted agents for repeatable production builds.</section>
+<h2>Adoption decision</h2>
+<p><strong>High when Azure hosts the game repo</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops" target="_blank" rel="noreferrer">https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

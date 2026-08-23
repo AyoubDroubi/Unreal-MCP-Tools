@@ -1,0 +1,11 @@
+:root{--bg:#0b1020;--panel:#121a2b;--panel2:#182238;--text:#e9eef8;--muted:#9aa8bd;--accent:#6ee7ff;--good:#7ee787;--warn:#ffd166;--border:#2b3954}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#09101d,#0f1728);color:var(--text);font:16px/1.6 Inter,Segoe UI,Arial,sans-serif}
+a{color:var(--accent)}.wrap{max-width:1050px;margin:auto;padding:36px 24px 70px}.top{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.badge{display:inline-block;padding:5px 9px;border:1px solid var(--border);border-radius:999px;background:#10192a;color:var(--muted);font-size:13px}.priority{color:var(--good)}
+h1{font-size:42px;line-height:1.1;margin:18px 0 10px}h2{margin-top:36px;font-size:24px}p.lead{font-size:19px;color:#c9d4e5;max-width:850px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.card{background:rgba(18,26,43,.92);border:1px solid var(--border);border-radius:16px;padding:18px}
+ol,ul{padding-left:24px}code,pre{font-family:Consolas,monospace}.note{border-left:4px solid var(--warn);padding:12px 16px;background:#1b2030;border-radius:8px}
+.nav{font-size:14px;color:var(--muted)}footer{margin-top:50px;border-top:1px solid var(--border);padding-top:20px;color:var(--muted);font-size:14px}
+table{width:100%;border-collapse:collapse;background:var(--panel);border-radius:12px;overflow:hidden}th,td{padding:11px 12px;border-bottom:1px solid var(--border);text-align:left}th{background:var(--panel2)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}.filters button{background:#121a2b;color:var(--text);border:1px solid var(--border);padding:8px 12px;border-radius:999px;cursor:pointer}
+.tool{margin:12px 0}.tool small{color:var(--muted)}.searchbox{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#0e1626;color:var(--text);font-size:16px;margin:18px 0}.meta{display:flex;gap:8px;flex-wrap:wrap}.category-count{color:var(--muted);font-size:14px}.tool[hidden]{display:none}.section-head{display:flex;justify-content:space-between;align-items:end;gap:10px}.source a{word-break:break-all}

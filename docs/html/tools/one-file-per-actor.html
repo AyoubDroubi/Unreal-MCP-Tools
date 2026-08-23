@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>One File Per Actor (OFPA) — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Source Control &amp; CI</div>
+<div class="top"><div class="meta">
+<span class="badge">official-system</span>
+<span class="badge">5.8</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">High for shared levels</span></div>
+<h1>One File Per Actor (OFPA)</h1>
+<p class="lead">Stores level Actor instance data in external files so different team members can modify different Actors without constantly touching the main level file.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Reduces source-control contention on large levels</li><li>Enabled by default with World Partition</li><li>Makes parallel world editing more practical</li><li>Cooked builds still embed Actors normally</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>When editing level actors, Codex should understand OFPA-generated files as engine-owned content and avoid renaming/manipulating them directly on disk.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Use World Partition or enable OFPA for the target level.</li><li>Keep actor edits scoped and review source-control changes carefully.</li><li>Use locks/source-control discipline for assets that remain indivisible.</li><li>Validate level load/cook after large structural changes.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> OFPA helps actor-level contention but does not make arbitrary .uasset files mergeable.</section>
+<h2>Adoption decision</h2>
+<p><strong>High for shared levels</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/one-file-per-actor-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/one-file-per-actor-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blueprint Debugger — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Debugging &amp; Profiling</div>
+<div class="top"><div class="meta">
+<span class="badge">official-tool</span>
+<span class="badge">5.8</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">Must adopt</span></div>
+<h1>Blueprint Debugger</h1>
+<p class="lead">Pauses Blueprint execution in PIE/SIE with breakpoints, watches, call stacks and step controls.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Inspect runtime pin and variable values</li><li>Step through visual execution instead of guessing</li><li>See breakpoints, watches and execution trace in one place</li><li>Debug a specific Blueprint instance in PIE</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Codex should use MCP-readable state/logging when available, while this remains the human runtime truth tool for complex visual execution bugs.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Select the Blueprint instance in Debug Object.</li><li>Place a breakpoint on the suspicious node.</li><li>Run PIE/SIE and reproduce the issue.</li><li>Inspect watches/pins and step through execution.</li><li>Fix the graph, compile, and reproduce again.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Pin values are only meaningful after the relevant nodes have executed.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/blueprint-debugger-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/blueprint-debugger-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Derived Data Cache (DDC) — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Assets &amp; Pipeline</div>
+<div class="top"><div class="meta">
+<span class="badge">official-system</span>
+<span class="badge">5.x</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">High for teams</span></div>
+<h1>Derived Data Cache (DDC)</h1>
+<p class="lead">Caches derived/cooked representations so shaders and assets do not rebuild unnecessarily.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Faster editor startup</li><li>Faster shader/content iteration</li><li>Shared team cache</li><li>CI speed</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Infrastructure guidance: never commit DDC; diagnose build slowness before changing game code.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Use local DDC for every developer.</li><li>Configure a shared cache for teams/build machines.</li><li>Keep cache outside Git.</li><li>Monitor misses when iteration becomes unexpectedly slow.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> DDC is disposable cache, not source-of-truth content.</section>
+<h2>Adoption decision</h2>
+<p><strong>High for teams</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/using-derived-data-cache-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/using-derived-data-cache-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

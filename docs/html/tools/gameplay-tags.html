@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gameplay Tags — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Gameplay Architecture</div>
+<div class="top"><div class="meta">
+<span class="badge">official-system</span>
+<span class="badge">5.x</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">Must adopt for scalable gameplay</span></div>
+<h1>Gameplay Tags</h1>
+<p class="lead">Hierarchical identifiers for gameplay state, categories, abilities, effects and cross-system queries.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Avoid string/enumeration sprawl</li><li>Works with GAS and other systems</li><li>Data-driven queries</li><li>Great decoupling primitive</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Prefer Gameplay Tags when multiple systems need a shared semantic vocabulary.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Define a naming hierarchy.</li><li>Use tags for semantic state/categories, not arbitrary data.</li><li>Centralize native/common tags.</li><li>Validate references and avoid near-duplicate meanings.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Tags can become an ungoverned global namespace; maintain conventions.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt for scalable gameplay</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/using-gameplay-tags-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/using-gameplay-tags-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

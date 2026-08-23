@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live Coding MCP Toolset — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · AI &amp; Automation</div>
+<div class="top"><div class="meta">
+<span class="badge">official-tool</span>
+<span class="badge">5.8+</span>
+<span class="badge">Official / Experimental</span>
+</div><span class="badge priority">High</span></div>
+<h1>Live Coding MCP Toolset</h1>
+<p class="lead">Triggers Unreal Live Coding compilation and returns compiler diagnostics directly to MCP clients.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Fast C++ iteration</li><li>Compiler diagnostics returned to Codex</li><li>No manual toolbar interaction</li><li>Useful after small implementation changes</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Use for short compile/fix loops; pair with AutomationTestToolset after successful compilation.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Enable Live Coding in Editor Preferences.</li><li>Make a small C++ change.</li><li>Call CompileLiveCoding.</li><li>Inspect errors/warnings.</li><li>Use a full editor rebuild when reflection/layout changes require it.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Live Coding is not a substitute for a clean UBT/UHT rebuild after UCLASS/USTRUCT/UFUNCTION signature or module-level changes.</section>
+<h2>Adoption decision</h2>
+<p><strong>High</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/LiveCodingToolset/ULiveCodingToolset" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/LiveCodingToolset/ULiveCodingToolset</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

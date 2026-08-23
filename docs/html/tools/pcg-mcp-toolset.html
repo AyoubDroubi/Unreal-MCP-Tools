@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PCG MCP Toolset — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · AI &amp; Automation</div>
+<div class="top"><div class="meta">
+<span class="badge">official-tool</span>
+<span class="badge">5.8</span>
+<span class="badge">Official / Experimental</span>
+</div><span class="badge priority">High for PCG projects</span></div>
+<h1>PCG MCP Toolset</h1>
+<p class="lead">Epic toolset that lets an AI assistant build and modify PCG graphs using AICallable Unreal-native operations.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Creates and edits PCG graph nodes through Unreal APIs</li><li>Exposes graph structure and node schemas to agents</li><li>Avoids fragile UI-only PCG automation</li><li>Pairs naturally with the official Unreal MCP server</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Prefer this official toolset over adding duplicate PCG mutation methods to UnrealMCPTools.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Enable PCG, PCGToolset, ToolsetRegistry and ModelContextProtocol.</li><li>Ask the agent to inspect the graph before modification.</li><li>Use native PCG tool calls to add nodes/subgraphs and parameters.</li><li>Execute/validate the graph and inspect generated output before saving.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> The PCGToolset plugin is Experimental in UE 5.8. Pin the engine version and smoke-test tool contracts after upgrades.</section>
+<h2>Adoption decision</h2>
+<p><strong>High for PCG projects</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/PCGToolset/UPCGToolset" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/PCGToolset/UPCGToolset</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

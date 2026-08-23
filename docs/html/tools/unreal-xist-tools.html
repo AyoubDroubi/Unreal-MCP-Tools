@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UnrealXistTools — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Developer Environment</div>
+<div class="top"><div class="meta">
+<span class="badge">external-repo</span>
+<span class="badge">UE4/UE5</span>
+<span class="badge">Maintained / MIT</span>
+</div><span class="badge priority">High for scripted workflows</span></div>
+<h1>UnrealXistTools</h1>
+<p class="lead">Cross-platform PowerShell 7 helpers for Unreal project discovery, UAT, clean builds, project files, IDE launch and project refactors.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Wraps verbose Unreal command lines in repeatable scripts</li><li>Provides a practical clean-project command</li><li>Simplifies UAT build/cook/stage/run workflows</li><li>Works on Windows, macOS and Linux for many commands</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Reference implementation for shell automation. We can borrow patterns or call equivalent project-local scripts rather than make Codex reconstruct UAT flags every time.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Install PowerShell 7.</li><li>Clone UnrealXistTools and add it to PATH.</li><li>Use UProject.ps1/UProjectFile.ps1 for discovery.</li><li>Use UAT.ps1 for build-cook-stage flows and UProjectClean.ps1 for deliberate clean rebuilds.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Review every cleanup/refactor command before running it on a working project; destructive switches should never be implicit.</section>
+<h2>Adoption decision</h2>
+<p><strong>High for scripted workflows</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://github.com/XistGG/UnrealXistTools" target="_blank" rel="noreferrer">https://github.com/XistGG/UnrealXistTools</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

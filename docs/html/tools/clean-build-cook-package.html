@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clean Build / Cook / Package Verification — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Source Control &amp; CI</div>
+<div class="top"><div class="meta">
+<span class="badge">method</span>
+<span class="badge">5.x</span>
+<span class="badge">Workflow</span>
+</div><span class="badge priority">Must adopt before releases</span></div>
+<h1>Clean Build / Cook / Package Verification</h1>
+<p class="lead">Regularly validate the project outside the warm developer editor: clean build, cook and package.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Catches hidden local-state dependencies</li><li>Finds missing asset references</li><li>Verifies shipping configuration</li><li>Prevents last-minute packaging surprises</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>A task is not release-ready merely because PIE works; Codex should report clean build/cook/package status separately.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Run clean Editor build periodically.</li><li>Cook target platforms.</li><li>Package Development/Shipping candidates.</li><li>Launch packaged build.</li><li>Run smoke/automation tests.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Live Coding success is insufficient evidence for release readiness.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt before releases</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/packaging-unreal-engine-projects" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/packaging-unreal-engine-projects</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

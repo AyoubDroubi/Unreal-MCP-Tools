@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UAssetAPI — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · AI &amp; Automation</div>
+<div class="top"><div class="meta">
+<span class="badge">external-library</span>
+<span class="badge">varies by release</span>
+<span class="badge">Community / MIT</span>
+</div><span class="badge priority">Specialized</span></div>
+<h1>UAssetAPI</h1>
+<p class="lead">Low-level .NET library for reading and writing Unreal assets outside the editor.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Offline inspection</li><li>Modding/tooling</li><li>JSON-like transformations</li><li>Useful for forensic or pipeline tasks when Unreal Editor is unavailable</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Fallback offline asset-inspection lane, not the normal production mutation path.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Use primarily for inspection/extraction.</li><li>Keep production Blueprint semantic writes inside Unreal Editor.</li><li>Pin the Unreal asset version before parsing/writing.</li><li>Validate any generated assets by opening them in Unreal.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Direct binary asset writes bypass Unreal editor invariants and compilation; use with strict safeguards.</section>
+<h2>Adoption decision</h2>
+<p><strong>Specialized</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://github.com/atenfyr/UAssetAPI" target="_blank" rel="noreferrer">https://github.com/atenfyr/UAssetAPI</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

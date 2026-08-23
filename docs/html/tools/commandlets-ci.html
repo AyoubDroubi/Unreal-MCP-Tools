@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unreal Commandlets in CI — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Source Control &amp; CI</div>
+<div class="top"><div class="meta">
+<span class="badge">method</span>
+<span class="badge">5.x</span>
+<span class="badge">Official workflow</span>
+</div><span class="badge priority">Must adopt</span></div>
+<h1>Unreal Commandlets in CI</h1>
+<p class="lead">Run validation, resave, cook and other editor operations headlessly through UnrealEditor-Cmd/commandlets.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Repeatable CI checks</li><li>No manual editor dependency</li><li>Asset validation at scale</li><li>Good merge gate</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Codex should produce CI commands alongside new validators/tools so every guardrail is automatable.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Start with DataValidation commandlet.</li><li>Add targeted project commandlets only for deterministic tasks.</li><li>Fail CI on errors.</li><li>Archive logs/reports.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Headless/commandlet execution can differ from interactive editor paths; test both where relevant.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/data-validation-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/data-validation-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

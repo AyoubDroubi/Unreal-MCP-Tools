@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unreal Build Accelerator (UBA) — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Source Control &amp; CI</div>
+<div class="top"><div class="meta">
+<span class="badge">official-system</span>
+<span class="badge">5.8</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">High for C++ teams</span></div>
+<h1>Unreal Build Accelerator (UBA)</h1>
+<p class="lead">Accelerates C++ compilation locally and, with Horde, can distribute build actions across remote machines.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Reduces iteration time on large C++ codebases</li><li>UBT integrates directly with UBA</li><li>Remote compilation can use otherwise idle machines</li><li>Especially useful once full editor builds become a productivity bottleneck</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Codex can inspect BuildConfiguration and build logs, but should not alter distributed-build infrastructure without an explicit task.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Measure local clean/incremental build times first.</li><li>Enable/tune UBA using UBT configuration.</li><li>For remote acceleration, configure Horde agents and secure access.</li><li>Track build reliability and speed before expanding the pool.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Remote build support/platform details evolve by engine release; follow the exact UE 5.8 documentation and secure Horde authentication.</section>
+<h2>Adoption decision</h2>
+<p><strong>High for C++ teams</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/horde-unreal-build-accelerator-and-remote-compilation-tutorial-for-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/horde-unreal-build-accelerator-and-remote-compilation-tutorial-for-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Official Unreal MCP — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · AI &amp; Automation</div>
+<div class="top"><div class="meta">
+<span class="badge">official-tool</span>
+<span class="badge">5.8+</span>
+<span class="badge">Official / Experimental</span>
+</div><span class="badge priority">Must adopt</span></div>
+<h1>Official Unreal MCP</h1>
+<p class="lead">Epic&#x27;s native MCP server and Toolset Registry bridge. This should be the primary AI transport layer for UE 5.8+.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Native Unreal Editor execution</li><li>AICallable tool discovery through Toolset Registry</li><li>Works with MCP-compatible agents such as Codex</li><li>Avoids direct binary asset hacking</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Foundation layer. Our plugin should extend it rather than create a parallel protocol server.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Enable ModelContextProtocol and ToolsetRegistry plugins.</li><li>Start the MCP server from Unreal Editor.</li><li>Connect Codex using the generated MCP configuration.</li><li>Prefer tool calls over UI automation when a native tool exists.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Experimental API surface can change between engine versions; pin the supported Unreal version and verify tool discovery after upgrades.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/unreal-mcp-in-unreal-editor" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/unreal-mcp-in-unreal-editor</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

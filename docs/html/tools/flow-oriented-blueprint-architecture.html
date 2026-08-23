@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blueprint Architecture: Components, Interfaces, Dispatchers &amp; Subsystems — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Gameplay Architecture</div>
+<div class="top"><div class="meta">
+<span class="badge">method</span>
+<span class="badge">all</span>
+<span class="badge">Architecture workflow</span>
+</div><span class="badge priority">Must adopt</span></div>
+<h1>Blueprint Architecture: Components, Interfaces, Dispatchers &amp; Subsystems</h1>
+<p class="lead">Use composition and explicit contracts to prevent giant, tightly-coupled Blueprint classes.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Smaller Blueprints</li><li>Less casting</li><li>Reusable systems</li><li>Clear ownership</li><li>Better AI-edit safety</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Default architecture rules for generated Blueprint systems; refactor before graphs become giant.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Put reusable actor behavior in Actor Components.</li><li>Use Blueprint Interfaces for capability contracts.</li><li>Use Event Dispatchers for one-to-many notifications.</li><li>Use Subsystems for scoped services.</li><li>Keep widgets as presentation, not game-state owners.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Do not replace every direct reference with an interface/event; choose the simplest decoupling that fits ownership.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/overview-of-blueprints-visual-scripting-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/overview-of-blueprints-visual-scripting-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

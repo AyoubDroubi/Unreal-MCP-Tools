@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Screenshot Comparison Testing — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Testing &amp; QA</div>
+<div class="top"><div class="meta">
+<span class="badge">official-method</span>
+<span class="badge">5.8</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">Medium</span></div>
+<h1>Screenshot Comparison Testing</h1>
+<p class="lead">Automated image comparison for catching rendering/UI regressions.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Visual regression detection</li><li>Useful for UI/material/lighting changes</li><li>Objective before/after evidence</li><li>Can catch subtle unintended changes</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>After visual changes, Codex can run the test and surface failing comparisons for human review.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Create deterministic test scenes.</li><li>Capture approved baselines.</li><li>Run screenshot tests in controlled settings.</li><li>Review tolerances and intentional updates carefully.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Rendering differences across hardware/drivers can create noise; control the environment.</section>
+<h2>Adoption decision</h2>
+<p><strong>Medium</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/automation-test-framework-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/en-us/unreal-engine/automation-test-framework-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

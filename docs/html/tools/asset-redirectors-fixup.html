@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Redirector Cleanup / Fix Up Redirectors — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Assets &amp; Pipeline</div>
+<div class="top"><div class="meta">
+<span class="badge">official-method</span>
+<span class="badge">5.8</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">Must adopt</span></div>
+<h1>Redirector Cleanup / Fix Up Redirectors</h1>
+<p class="lead">Repairs references left behind when assets are moved or renamed and removes obsolete redirector objects.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Prevents stale asset paths accumulating</li><li>Makes large refactors safer</li><li>Can run interactively or through ResavePackages commandlet</li><li>Keeps Content folders and automation predictable</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>Codex may prepare and run a controlled commandlet workflow, but must inspect git status and never mass-resave the project silently.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>After a controlled asset move/rename, inspect redirectors.</li><li>Use Fixup Redirectors in the Content Browser for local work.</li><li>For project-wide maintenance, use the ResavePackages commandlet with FixupRedirectors in a clean branch.</li><li>Validate references and commit all resulting asset changes together.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Project-wide fixup can touch many binary assets. Run on a clean branch/worktree and review the resulting source-control diff.</section>
+<h2>Adoption decision</h2>
+<p><strong>Must adopt</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/asset-redirectors-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/asset-redirectors-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>

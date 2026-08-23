@@ -1,0 +1,1925 @@
+{
+  "generated": "2026-08-23",
+  "baseline": "Unreal Engine 5.8+ for MCP-specific features",
+  "count": 70,
+  "categories": [
+    "AI & Automation",
+    "Blueprint Productivity",
+    "Developer Environment",
+    "Testing & QA",
+    "Debugging & Profiling",
+    "Assets & Pipeline",
+    "Source Control & CI",
+    "Gameplay Architecture"
+  ],
+  "tools": [
+    {
+      "id": "official-unreal-mcp",
+      "title": "Official Unreal MCP",
+      "category": "AI & Automation",
+      "kind": "official-tool",
+      "priority": "Must adopt",
+      "ue": "5.8+",
+      "status": "Official / Experimental",
+      "summary": "Epic's native MCP server and Toolset Registry bridge. This should be the primary AI transport layer for UE 5.8+.",
+      "why": [
+        "Native Unreal Editor execution",
+        "AICallable tool discovery through Toolset Registry",
+        "Works with MCP-compatible agents such as Codex",
+        "Avoids direct binary asset hacking"
+      ],
+      "workflow": [
+        "Enable ModelContextProtocol and ToolsetRegistry plugins.",
+        "Start the MCP server from Unreal Editor.",
+        "Connect Codex using the generated MCP configuration.",
+        "Prefer tool calls over UI automation when a native tool exists."
+      ],
+      "codex": "Foundation layer. Our plugin should extend it rather than create a parallel protocol server.",
+      "caution": "Experimental API surface can change between engine versions; pin the supported Unreal version and verify tool discovery after upgrades.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/unreal-mcp-in-unreal-editor",
+      "slug": "official-unreal-mcp",
+      "html": "docs/html/tools/official-unreal-mcp.html"
+    },
+    {
+      "id": "unreal-mcp-tools",
+      "title": "Unreal MCP Tools (this repository)",
+      "category": "AI & Automation",
+      "kind": "our-tool",
+      "priority": "Must adopt",
+      "ue": "5.8+",
+      "status": "In development",
+      "summary": "Our production-oriented extension layer for Blueprint inspection, graph mutation, validation and Codex workflows.",
+      "why": [
+        "Safe Blueprint read/write operations",
+        "Transactions and compile policy",
+        "Structured project inspection",
+        "Codex-focused guardrails"
+      ],
+      "workflow": [
+        "Install Plugin/UnrealMCPTools into the game project.",
+        "Enable official Unreal MCP dependencies.",
+        "Run environment checks.",
+        "Inspect before mutating.",
+        "Compile, validate, re-read, then explicitly save."
+      ],
+      "codex": "Primary custom toolset layer. Add project-specific tools here only when Epic does not already expose them.",
+      "caution": "Must be built with UHT/UBT in a real UE 5.8 editor target before being treated as verified.",
+      "source": "https://github.com/AyoubDroubi/Unreal-MCP-Tools",
+      "slug": "unreal-mcp-tools",
+      "html": "docs/html/tools/unreal-mcp-tools.html"
+    },
+    {
+      "id": "slate-inspector-toolset",
+      "title": "Slate Inspector Toolset",
+      "category": "AI & Automation",
+      "kind": "official-tool",
+      "priority": "Must adopt",
+      "ue": "5.8+",
+      "status": "Official / Experimental",
+      "summary": "Playwright-style automation for Unreal Editor Slate UI: snapshots, screenshots, clicks, typing, drag, wait and form filling.",
+      "why": [
+        "Lets Codex operate editor UI when no native API exists",
+        "Stable widget refs",
+        "UI screenshots for verification",
+        "Useful for editor plugins and custom tools"
+      ],
+      "workflow": [
+        "Observe the target window/panel.",
+        "Snapshot the widget tree.",
+        "Use refs for click/type/select/drag.",
+        "Wait for expected UI state.",
+        "Take a screenshot when visual evidence matters.",
+        "Unobserve when done."
+      ],
+      "codex": "Fallback lane after native MCP/API tools. Excellent for UMG/editor workflow smoke tests.",
+      "caution": "Do not use UI automation when a deterministic native tool exists; UI labels and layouts are more fragile.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/SlateInspectorToolset/USlateInspectorToolset",
+      "slug": "slate-inspector-toolset",
+      "html": "docs/html/tools/slate-inspector-toolset.html"
+    },
+    {
+      "id": "automation-test-toolset",
+      "title": "Automation Test MCP Toolset",
+      "category": "AI & Automation",
+      "kind": "official-tool",
+      "priority": "Must adopt",
+      "ue": "5.8+",
+      "status": "Official / Experimental",
+      "summary": "Epic MCP toolset that discovers, runs, stops and retrieves Unreal Automation Framework test results.",
+      "why": [
+        "Codex can execute real Unreal tests",
+        "Structured JSON status/results",
+        "Works with existing automation tests",
+        "Supports filtered test batches"
+      ],
+      "workflow": [
+        "DiscoverTests once per session.",
+        "ListTests using name/tag filters.",
+        "RunTests or RunTestsByFilter.",
+        "Poll GetTestStatus.",
+        "Read GetTestResults and fix failures."
+      ],
+      "codex": "Use as the standard post-change verification lane for editor/gameplay code and content tests.",
+      "caution": "Discovery is asynchronous and can take time; do not repeatedly rediscover unless tests changed.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/AutomationTestToolset/UAutomationTestToolset",
+      "slug": "automation-test-toolset",
+      "html": "docs/html/tools/automation-test-toolset.html"
+    },
+    {
+      "id": "live-coding-toolset",
+      "title": "Live Coding MCP Toolset",
+      "category": "AI & Automation",
+      "kind": "official-tool",
+      "priority": "High",
+      "ue": "5.8+",
+      "status": "Official / Experimental",
+      "summary": "Triggers Unreal Live Coding compilation and returns compiler diagnostics directly to MCP clients.",
+      "why": [
+        "Fast C++ iteration",
+        "Compiler diagnostics returned to Codex",
+        "No manual toolbar interaction",
+        "Useful after small implementation changes"
+      ],
+      "workflow": [
+        "Enable Live Coding in Editor Preferences.",
+        "Make a small C++ change.",
+        "Call CompileLiveCoding.",
+        "Inspect errors/warnings.",
+        "Use a full editor rebuild when reflection/layout changes require it."
+      ],
+      "codex": "Use for short compile/fix loops; pair with AutomationTestToolset after successful compilation.",
+      "caution": "Live Coding is not a substitute for a clean UBT/UHT rebuild after UCLASS/USTRUCT/UFUNCTION signature or module-level changes.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/LiveCodingToolset/ULiveCodingToolset",
+      "slug": "live-coding-toolset",
+      "html": "docs/html/tools/live-coding-toolset.html"
+    },
+    {
+      "id": "python-editor-scripting",
+      "title": "Python Editor Scripting",
+      "category": "AI & Automation",
+      "kind": "official-method",
+      "priority": "High",
+      "ue": "5.8",
+      "status": "Official / Experimental",
+      "summary": "Unreal's embedded Python lane for asset processing, editor automation and pipeline integration.",
+      "why": [
+        "Fast automation without rebuilding C++",
+        "Excellent for bulk asset operations",
+        "Interop with external DCC/pipeline tooling",
+        "Easy to expose repeatable utilities"
+      ],
+      "workflow": [
+        "Enable Python Editor Script Plugin and Editor Scripting Utilities.",
+        "Keep scripts editor-only.",
+        "Use Python for bulk deterministic operations.",
+        "Promote stable critical behavior to C++ when stronger typing/API coverage is required."
+      ],
+      "codex": "Good implementation lane for generated one-off or project pipeline scripts, especially content operations.",
+      "caution": "Python API coverage differs from C++; do not force graph authoring through Python when editor C++ APIs are more reliable.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/scripting-the-unreal-editor-using-python",
+      "slug": "python-editor-scripting",
+      "html": "docs/html/tools/python-editor-scripting.html"
+    },
+    {
+      "id": "editor-utility-widgets",
+      "title": "Editor Utility Widgets",
+      "category": "AI & Automation",
+      "kind": "official-method",
+      "priority": "High",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Dockable UMG-based editor tools for project-specific buttons, dashboards and workflows.",
+      "why": [
+        "Fast internal tooling",
+        "Blueprint-first",
+        "Great for designers",
+        "Can wrap repetitive project actions in a friendly UI"
+      ],
+      "workflow": [
+        "Create an Editor Utility Widget.",
+        "Keep runtime and editor responsibilities separate.",
+        "Expose project operations as buttons/forms.",
+        "Use MCP or Slate Inspector to drive it when agent automation is useful."
+      ],
+      "codex": "Codex can create/support EUWs and later drive them through Slate Inspector when a direct tool call is not available.",
+      "caution": "Do not hide important business logic only inside UI graphs; keep reusable logic in functions/subsystems/libraries.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/scripting-the-unreal-editor-using-blueprints",
+      "slug": "editor-utility-widgets",
+      "html": "docs/html/tools/editor-utility-widgets.html"
+    },
+    {
+      "id": "scriptable-tools-system",
+      "title": "Scriptable Tools System",
+      "category": "AI & Automation",
+      "kind": "official-method",
+      "priority": "Medium",
+      "ue": "5.8",
+      "status": "Official plugin",
+      "summary": "Blueprint-accessible Interactive Tools Framework for building custom viewport interaction tools and editor modes.",
+      "why": [
+        "Custom placement/editing tools",
+        "Technical-art workflows",
+        "Viewport interaction beyond buttons",
+        "Reusable project-specific editor modes"
+      ],
+      "workflow": [
+        "Enable Scriptable Tools Editor Mode.",
+        "Create an editor-only Scriptable Tool Blueprint.",
+        "Expose focused user interactions.",
+        "Use transactions for asset/world mutations."
+      ],
+      "codex": "Useful when the optimal workflow needs a human-in-the-loop viewport tool rather than a hidden command.",
+      "caution": "This is for editor tooling, not runtime gameplay.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/creating-a-scriptable-tool-in-unreal-engine",
+      "slug": "scriptable-tools-system",
+      "html": "docs/html/tools/scriptable-tools-system.html"
+    },
+    {
+      "id": "ziggy-unreal-mcp",
+      "title": "ZiggyMar / unreal-mcp",
+      "category": "AI & Automation",
+      "kind": "external-repo",
+      "priority": "Reference",
+      "ue": "5.6-5.8 reported",
+      "status": "Community",
+      "summary": "Community Unreal MCP bridge with Blueprint graph editing, project indexing and node catalog ideas worth studying.",
+      "why": [
+        "Strong reference architecture",
+        "Blueprint graph mutation patterns",
+        "Persistent project index",
+        "GUID-oriented editing"
+      ],
+      "workflow": [
+        "Use as a reference implementation.",
+        "Port only the ideas/API patterns we need.",
+        "Prefer Epic's official MCP transport on UE 5.8.",
+        "Do not duplicate overlapping servers."
+      ],
+      "codex": "Architecture reference for deeper graph tooling and project indexing.",
+      "caution": "Third-party implementation; do not couple our production path to it when the official MCP layer covers transport.",
+      "source": "https://github.com/ZiggyMar/unreal-mcp",
+      "slug": "ziggy-unreal-mcp",
+      "html": "docs/html/tools/ziggy-unreal-mcp.html"
+    },
+    {
+      "id": "blueprint-extractor",
+      "title": "SunGrow Blueprint Extractor",
+      "category": "AI & Automation",
+      "kind": "external-repo",
+      "priority": "Reference",
+      "ue": "UE5",
+      "status": "Community",
+      "summary": "Blueprint and StateTree extraction/authoring system with a large machine-friendly MCP contract.",
+      "why": [
+        "Structured JSON extraction",
+        "StateTree coverage",
+        "Large tool surface",
+        "Useful design ideas for read/verify/save workflows"
+      ],
+      "workflow": [
+        "Study its resource schemas and extraction model.",
+        "Borrow machine-friendly representation ideas.",
+        "Keep explicit-save semantics.",
+        "Port features only after checking UE 5.8 APIs."
+      ],
+      "codex": "Reference for richer asset/resource representations and StateTree support.",
+      "caution": "Treat compatibility and validation claims as repository-specific; verify against the target editor build.",
+      "source": "https://github.com/SunGrow/ue-blueprint-extractor",
+      "slug": "blueprint-extractor",
+      "html": "docs/html/tools/blueprint-extractor.html"
+    },
+    {
+      "id": "unreal-ai-assistant",
+      "title": "UnrealAIAssistant",
+      "category": "AI & Automation",
+      "kind": "external-repo",
+      "priority": "Reference",
+      "ue": "5.5 documented",
+      "status": "Community",
+      "summary": "Editor-integrated AI panel supporting Codex/Claude plus MCP tools for assets, Blueprints, materials, characters and viewport capture.",
+      "why": [
+        "Good in-editor UX ideas",
+        "Task-based automation model",
+        "Viewport capture",
+        "Backend switching"
+      ],
+      "workflow": [
+        "Study the editor panel and task orchestration UX.",
+        "Do not vendor blindly because its documented baseline is UE 5.5.",
+        "Port useful concepts into our 5.8-native layer."
+      ],
+      "codex": "Reference for an optional dockable assistant experience inside Unreal.",
+      "caution": "Version baseline differs from ours; editor APIs may need migration.",
+      "source": "https://github.com/lyk555/UnrealAIAssistant",
+      "slug": "unreal-ai-assistant",
+      "html": "docs/html/tools/unreal-ai-assistant.html"
+    },
+    {
+      "id": "ue-node2code",
+      "title": "UE Node2Code",
+      "category": "AI & Automation",
+      "kind": "external-repo",
+      "priority": "Useful optional",
+      "ue": "4.26+",
+      "status": "Community",
+      "summary": "Exports Material and Niagara node graphs into compact text that is easier for AI agents to reason about.",
+      "why": [
+        "Material graph readability",
+        "Niagara graph readability",
+        "Compact AI context",
+        "Useful when our native graph readers do not cover a graph type"
+      ],
+      "workflow": [
+        "Install as a project plugin if compatible.",
+        "Export the target graph.",
+        "Feed compact text to Codex for analysis.",
+        "Apply edits through Unreal-native APIs/editor tools."
+      ],
+      "codex": "Useful read-only bridge for graph types beyond standard Blueprints.",
+      "caution": "Prefer native structured readers once our MCP plugin supports the same graph type.",
+      "source": "https://github.com/Don-Enone/UE_Node2Code",
+      "slug": "ue-node2code",
+      "html": "docs/html/tools/ue-node2code.html"
+    },
+    {
+      "id": "uassetapi",
+      "title": "UAssetAPI",
+      "category": "AI & Automation",
+      "kind": "external-library",
+      "priority": "Specialized",
+      "ue": "varies by release",
+      "status": "Community / MIT",
+      "summary": "Low-level .NET library for reading and writing Unreal assets outside the editor.",
+      "why": [
+        "Offline inspection",
+        "Modding/tooling",
+        "JSON-like transformations",
+        "Useful for forensic or pipeline tasks when Unreal Editor is unavailable"
+      ],
+      "workflow": [
+        "Use primarily for inspection/extraction.",
+        "Keep production Blueprint semantic writes inside Unreal Editor.",
+        "Pin the Unreal asset version before parsing/writing.",
+        "Validate any generated assets by opening them in Unreal."
+      ],
+      "codex": "Fallback offline asset-inspection lane, not the normal production mutation path.",
+      "caution": "Direct binary asset writes bypass Unreal editor invariants and compilation; use with strict safeguards.",
+      "source": "https://github.com/atenfyr/UAssetAPI",
+      "slug": "uassetapi",
+      "html": "docs/html/tools/uassetapi.html"
+    },
+    {
+      "id": "pcg-mcp-toolset",
+      "title": "PCG MCP Toolset",
+      "category": "AI & Automation",
+      "kind": "official-tool",
+      "priority": "High for PCG projects",
+      "ue": "5.8",
+      "status": "Official / Experimental",
+      "summary": "Epic toolset that lets an AI assistant build and modify PCG graphs using AICallable Unreal-native operations.",
+      "why": [
+        "Creates and edits PCG graph nodes through Unreal APIs",
+        "Exposes graph structure and node schemas to agents",
+        "Avoids fragile UI-only PCG automation",
+        "Pairs naturally with the official Unreal MCP server"
+      ],
+      "workflow": [
+        "Enable PCG, PCGToolset, ToolsetRegistry and ModelContextProtocol.",
+        "Ask the agent to inspect the graph before modification.",
+        "Use native PCG tool calls to add nodes/subgraphs and parameters.",
+        "Execute/validate the graph and inspect generated output before saving."
+      ],
+      "codex": "Prefer this official toolset over adding duplicate PCG mutation methods to UnrealMCPTools.",
+      "caution": "The PCGToolset plugin is Experimental in UE 5.8. Pin the engine version and smoke-test tool contracts after upgrades.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/API/Plugins/PCGToolset/UPCGToolset",
+      "slug": "pcg-mcp-toolset",
+      "html": "docs/html/tools/pcg-mcp-toolset.html"
+    },
+    {
+      "id": "blueprint-assist",
+      "title": "Blueprint Assist",
+      "category": "Blueprint Productivity",
+      "kind": "external-plugin",
+      "priority": "High",
+      "ue": "version dependent",
+      "status": "Marketplace / community docs",
+      "summary": "Automatic Blueprint graph formatting plus keyboard-first node navigation and editing.",
+      "why": [
+        "Cuts graph cleanup time",
+        "Consistent layout",
+        "Keyboard workflows",
+        "Reduces Blueprint spaghetti visually"
+      ],
+      "workflow": [
+        "Install the compatible plugin build.",
+        "Share team settings through source control.",
+        "Format after meaningful graph changes, not on every tiny operation.",
+        "Use it as presentation/readability tooling, not architecture."
+      ],
+      "codex": "After Codex mutates a graph, a formatter integration could normalize node layout before review.",
+      "caution": "Formatting cannot fix bad responsibilities or coupling. Keep architecture rules separate.",
+      "source": "https://blueprintassist.github.io/",
+      "slug": "blueprint-assist",
+      "html": "docs/html/tools/blueprint-assist.html"
+    },
+    {
+      "id": "auto-size-comments",
+      "title": "Auto Size Comments",
+      "category": "Blueprint Productivity",
+      "kind": "external-repo",
+      "priority": "High",
+      "ue": "version dependent",
+      "status": "Community / free",
+      "summary": "Automatically keeps Blueprint comment boxes sized around their nodes and supports comment style presets.",
+      "why": [
+        "Better graph documentation",
+        "Less manual comment-box maintenance",
+        "Readable large graphs",
+        "Works well with formatter workflows"
+      ],
+      "workflow": [
+        "Install into the project/engine plugin folder.",
+        "Use consistent comment presets.",
+        "Group logic by responsibility, not by arbitrary screen region.",
+        "Review graph-specific compatibility."
+      ],
+      "codex": "Codex can preserve comments and create meaningful graph sections; this plugin keeps the visual grouping tidy.",
+      "caution": "Some graph types have compatibility limitations; verify on the target UE version.",
+      "source": "https://github.com/AutoSizeComments/AutoSizeComments",
+      "slug": "auto-size-comments",
+      "html": "docs/html/tools/auto-size-comments.html"
+    },
+    {
+      "id": "electronic-nodes",
+      "title": "Electronic Nodes",
+      "category": "Blueprint Productivity",
+      "kind": "external-plugin",
+      "priority": "Optional",
+      "ue": "5.5-5.7 documented",
+      "status": "Marketplace / source repo",
+      "summary": "Alternative wire rendering for Blueprint, Material and other graph editors.",
+      "why": [
+        "Improves graph scanability",
+        "Clear wire crossings",
+        "Works across multiple graph editors",
+        "Pure quality-of-life"
+      ],
+      "workflow": [
+        "Install only if a UE 5.8-compatible build is available.",
+        "Choose one team-wide wire style.",
+        "Do not make screenshots/reviews depend on personal-only styling."
+      ],
+      "codex": "No direct automation value; improves human review of graphs generated or edited by Codex.",
+      "caution": "The public compatibility table currently documents up to UE 5.7; verify before adopting on 5.8.",
+      "source": "https://github.com/hugoattal/ElectronicNodes",
+      "slug": "electronic-nodes",
+      "html": "docs/html/tools/electronic-nodes.html"
+    },
+    {
+      "id": "blueprint-diff",
+      "title": "Blueprint Diff",
+      "category": "Blueprint Productivity",
+      "kind": "official-tool",
+      "priority": "Must adopt",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Unreal's asset-aware diff workflow for comparing Blueprint revisions instead of treating .uasset files as opaque binaries.",
+      "why": [
+        "Review Blueprint changes",
+        "Understand node/property differences",
+        "Essential with Git/LFS",
+        "Safer AI-generated asset review"
+      ],
+      "workflow": [
+        "Compare the working Blueprint against the previous revision.",
+        "Review graph, defaults and component changes.",
+        "Reject unexpected changes before save/commit.",
+        "Capture diff evidence in PRs for important assets."
+      ],
+      "codex": "Use as a human/automation verification concept: re-read changed graphs and surface a semantic summary before commit.",
+      "caution": "Git textual diff is not meaningful for .uasset files; use Unreal-aware diffing.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/ue-diff-tool-in-unreal-engine",
+      "slug": "blueprint-diff",
+      "html": "docs/html/tools/blueprint-diff.html"
+    },
+    {
+      "id": "blueprintue",
+      "title": "BlueprintUE",
+      "category": "Blueprint Productivity",
+      "kind": "external-repo",
+      "priority": "Optional",
+      "ue": "through 5.6 documented",
+      "status": "Community / MIT plugin",
+      "summary": "Plugin/service workflow for sharing Blueprint graphs in a web-readable format.",
+      "why": [
+        "Fast collaboration",
+        "Easy graph sharing",
+        "Good for bug reports and design review",
+        "Useful external representation"
+      ],
+      "workflow": [
+        "Use only for non-sensitive graphs.",
+        "Export/share the smallest relevant graph.",
+        "Keep source-of-truth in the Unreal project.",
+        "Do not upload proprietary logic without approval."
+      ],
+      "codex": "Useful for sharing a graph snapshot with humans; not required for internal MCP editing.",
+      "caution": "External service and documented plugin compatibility must be reviewed before project use.",
+      "source": "https://github.com/blueprintue/blueprintue-cpp-plugin",
+      "slug": "blueprintue",
+      "html": "docs/html/tools/blueprintue.html"
+    },
+    {
+      "id": "ry-helpful-helpers",
+      "title": "RyHelpfulHelpers",
+      "category": "Blueprint Productivity",
+      "kind": "external-repo",
+      "priority": "Evaluate",
+      "ue": "UE4/UE5",
+      "status": "Community / MIT",
+      "summary": "Large helper plugin exposing runtime/editor utilities for Blueprints and C++.",
+      "why": [
+        "Reduces repeated utility code",
+        "Editor helper functions",
+        "Debug drawing helpers",
+        "Broad Blueprint convenience surface"
+      ],
+      "workflow": [
+        "Audit only the helpers you would actually use.",
+        "Avoid taking a large dependency for one trivial helper.",
+        "Prefer engine-native APIs when equivalent.",
+        "Wrap adopted helpers behind project abstractions if they become core."
+      ],
+      "codex": "Reference source for missing utility functions; can reduce generated boilerplate.",
+      "caution": "Broad helper libraries can become dependency magnets; evaluate footprint and ownership.",
+      "source": "https://github.com/rfsheffer/RyHelpfulHelpers",
+      "slug": "ry-helpful-helpers",
+      "html": "docs/html/tools/ry-helpful-helpers.html"
+    },
+    {
+      "id": "blueprint-console-commands",
+      "title": "Blueprint Console Commands",
+      "category": "Blueprint Productivity",
+      "kind": "external-repo",
+      "priority": "Useful optional",
+      "ue": "UE5",
+      "status": "Community",
+      "summary": "Makes it easy to expose Blueprint functions as developer console/cheat commands.",
+      "why": [
+        "Fast gameplay debugging",
+        "Designer-friendly debug commands",
+        "Parameter autocomplete/help",
+        "Great for repeatable test setup"
+      ],
+      "workflow": [
+        "Keep commands development-only.",
+        "Group commands by system.",
+        "Use commands to reproduce states quickly.",
+        "Pair with automation tests where a scenario becomes stable."
+      ],
+      "codex": "Codex can call documented console commands during PIE debugging or generate new debug-only commands.",
+      "caution": "Never expose privileged/debug commands in shipping builds unintentionally.",
+      "source": "https://github.com/sleepCOW/BlueprintConsoleCommands",
+      "slug": "blueprint-console-commands",
+      "html": "docs/html/tools/blueprint-console-commands.html"
+    },
+    {
+      "id": "quick-actions",
+      "title": "Quick Actions",
+      "category": "Blueprint Productivity",
+      "kind": "external-repo",
+      "priority": "Evaluate",
+      "ue": "UE5",
+      "status": "Community / MIT",
+      "summary": "Open-source Unreal editor productivity plugin from Out-of-the-Box Plugins.",
+      "why": [
+        "Editor quality-of-life",
+        "Good source of reusable editor extension patterns",
+        "Actively maintained in 2026",
+        "Potential replacement for one-off repetitive editor actions"
+      ],
+      "workflow": [
+        "Review current feature list against your workflow.",
+        "Adopt only actions that save repeated manual work.",
+        "Keep project-critical automation in our own toolset or official APIs."
+      ],
+      "codex": "Potential human productivity companion; source also provides editor-extension implementation examples.",
+      "caution": "Treat as optional convenience, not a required project dependency.",
+      "source": "https://github.com/outoftheboxplugins/QuickActions",
+      "slug": "quick-actions",
+      "html": "docs/html/tools/quick-actions.html"
+    },
+    {
+      "id": "flowgraph",
+      "title": "FlowGraph",
+      "category": "Blueprint Productivity",
+      "kind": "external-repo",
+      "priority": "High for quest/narrative flow",
+      "ue": "5.8 release available",
+      "status": "Community / MIT",
+      "summary": "Design-agnostic async node graph for game flow, quests, sequences and narrative scripting.",
+      "why": [
+        "Avoids giant Level Blueprints",
+        "Async/latent by design",
+        "Reusable gameplay flow nodes",
+        "UE 5.8 release available"
+      ],
+      "workflow": [
+        "Use when the game has substantial quest/narrative/event flow.",
+        "Build project-specific Flow nodes.",
+        "Keep low-level gameplay inside components/systems.",
+        "Use FlowGraph to orchestrate, not own every gameplay detail."
+      ],
+      "codex": "Codex can help author custom flow nodes and inspect flow assets once we expose dedicated readers.",
+      "caution": "Adds a major architectural abstraction; adopt intentionally, not for tiny projects.",
+      "source": "https://github.com/MothCocoon/FlowGraph",
+      "slug": "flowgraph",
+      "html": "docs/html/tools/flowgraph.html"
+    },
+    {
+      "id": "blueprint-header-view",
+      "title": "Blueprint Header View",
+      "category": "Blueprint Productivity",
+      "kind": "official-tool",
+      "priority": "High",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Previews a Blueprint class or struct as C++-style declarations for variables, functions, components and dispatchers.",
+      "why": [
+        "Makes Blueprint structure easier to understand from code-oriented workflows",
+        "Helps plan Blueprint-to-C++ migrations",
+        "Useful context for Codex before creating equivalent C++ types",
+        "Highlights class shape without manually reading every graph"
+      ],
+      "workflow": [
+        "Right-click a Blueprint class or struct.",
+        "Choose Preview Equivalent C++ Header.",
+        "Review variables, functions, components and event dispatchers.",
+        "Use the preview as migration/design context; implement actual function logic manually in C++."
+      ],
+      "codex": "Use as supporting evidence when deciding whether a Blueprint should remain visual scripting or move behind a C++ API.",
+      "caution": "This produces declarations, not a complete automatic Blueprint-to-C++ conversion.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/an-overview-of-the-blueprint-header-view-in-unreal-engine",
+      "slug": "blueprint-header-view",
+      "html": "docs/html/tools/blueprint-header-view.html"
+    },
+    {
+      "id": "rider-unreallink",
+      "title": "JetBrains Rider + UnrealLink / RiderLink",
+      "category": "Developer Environment",
+      "kind": "external-tool",
+      "priority": "High for C++ projects",
+      "ue": "UE5",
+      "status": "Maintained",
+      "summary": "Deep Rider/Unreal Editor integration with Blueprint awareness, code navigation, game launch control and enhanced Unreal logs.",
+      "why": [
+        "Find C++ usages from Blueprints",
+        "Navigate from C++ to the corresponding Blueprint in Unreal Editor",
+        "Run multiplayer configurations from the IDE",
+        "Use Unreal-aware inspections/refactors and filtered editor logs"
+      ],
+      "workflow": [
+        "Install/open the project in JetBrains Rider.",
+        "Install RiderLink into the game or engine when prompted.",
+        "Use Find Usages to include Blueprint-derived/reference information.",
+        "Launch PIE/server/client configurations and inspect Unreal logs directly from Rider."
+      ],
+      "codex": "Useful companion IDE when Codex edits C++; it provides human verification of reflection usage and Blueprint/C++ coupling.",
+      "caution": "Rider is a separate commercial IDE depending on your license; RiderLink should match the Rider/engine setup.",
+      "source": "https://github.com/JetBrains/UnrealLink",
+      "slug": "rider-unreallink",
+      "html": "docs/html/tools/rider-unreallink.html"
+    },
+    {
+      "id": "unreal-xist-tools",
+      "title": "UnrealXistTools",
+      "category": "Developer Environment",
+      "kind": "external-repo",
+      "priority": "High for scripted workflows",
+      "ue": "UE4/UE5",
+      "status": "Maintained / MIT",
+      "summary": "Cross-platform PowerShell 7 helpers for Unreal project discovery, UAT, clean builds, project files, IDE launch and project refactors.",
+      "why": [
+        "Wraps verbose Unreal command lines in repeatable scripts",
+        "Provides a practical clean-project command",
+        "Simplifies UAT build/cook/stage/run workflows",
+        "Works on Windows, macOS and Linux for many commands"
+      ],
+      "workflow": [
+        "Install PowerShell 7.",
+        "Clone UnrealXistTools and add it to PATH.",
+        "Use UProject.ps1/UProjectFile.ps1 for discovery.",
+        "Use UAT.ps1 for build-cook-stage flows and UProjectClean.ps1 for deliberate clean rebuilds."
+      ],
+      "codex": "Reference implementation for shell automation. We can borrow patterns or call equivalent project-local scripts rather than make Codex reconstruct UAT flags every time.",
+      "caution": "Review every cleanup/refactor command before running it on a working project; destructive switches should never be implicit.",
+      "source": "https://github.com/XistGG/UnrealXistTools",
+      "slug": "unreal-xist-tools",
+      "html": "docs/html/tools/unreal-xist-tools.html"
+    },
+    {
+      "id": "data-validation",
+      "title": "Data Validation",
+      "category": "Testing & QA",
+      "kind": "official-tool",
+      "priority": "Must adopt",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Built-in validation framework for naming, budgets, dependency rules and project-specific asset constraints.",
+      "why": [
+        "Catches bad assets on save/CI",
+        "Supports custom validators",
+        "Can validate dependencies",
+        "Ideal guardrail for AI-authored content"
+      ],
+      "workflow": [
+        "Define UEditorValidatorBase validators.",
+        "Run validation on save and pre-submit.",
+        "Use DataValidation commandlet in CI.",
+        "Make validation failures block merges for critical rules."
+      ],
+      "codex": "After asset changes, run validators and repair failures before saving/committing.",
+      "caution": "Keep validators deterministic and actionable; avoid noisy warnings that teams learn to ignore.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/data-validation-in-unreal-engine",
+      "slug": "data-validation",
+      "html": "docs/html/tools/data-validation.html"
+    },
+    {
+      "id": "automation-framework",
+      "title": "Automation Test Framework",
+      "category": "Testing & QA",
+      "kind": "official-tool",
+      "priority": "Must adopt",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Unreal framework for unit, feature, smoke, content-stress and screenshot-comparison tests.",
+      "why": [
+        "Regression protection",
+        "Headless/editor test execution",
+        "Content stress tests",
+        "Pairs directly with MCP AutomationTestToolset"
+      ],
+      "workflow": [
+        "Write fast smoke tests for core invariants.",
+        "Add feature tests for systems.",
+        "Add content stress tests for compile/load integrity.",
+        "Run targeted tests during development and broader suites in CI."
+      ],
+      "codex": "Codex should add or update tests with behavior changes, then execute them through the MCP toolset.",
+      "caution": "Do not mark slow tests as Smoke; keep test scope and runtime intentional.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/automation-test-framework-in-unreal-engine",
+      "slug": "automation-framework",
+      "html": "docs/html/tools/automation-framework.html"
+    },
+    {
+      "id": "functional-testing",
+      "title": "Functional Testing",
+      "category": "Testing & QA",
+      "kind": "official-tool",
+      "priority": "High",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Level/gameplay-oriented tests using Unreal's Functional Testing framework.",
+      "why": [
+        "Tests real gameplay scenarios",
+        "Designer-visible test actors",
+        "Useful for Blueprint-heavy projects",
+        "Can validate PIE behavior"
+      ],
+      "workflow": [
+        "Create small deterministic test maps.",
+        "Use FunctionalTest actors for scenarios.",
+        "Keep setup isolated.",
+        "Run through Automation Framework/Gauntlet as needed."
+      ],
+      "codex": "Ideal for Blueprint features where pure C++ unit tests cannot capture the behavior.",
+      "caution": "Avoid giant all-purpose test maps; small targeted maps are easier to debug.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/automation-test-framework-in-unreal-engine",
+      "slug": "functional-testing",
+      "html": "docs/html/tools/functional-testing.html"
+    },
+    {
+      "id": "gauntlet",
+      "title": "Gauntlet Automation Framework",
+      "category": "Testing & QA",
+      "kind": "official-tool",
+      "priority": "High for multiplayer/builds",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Launches and orchestrates editor, packaged game, server/client and platform test sessions.",
+      "why": [
+        "Multiplayer sessions",
+        "Packaged-build verification",
+        "Device/platform testing",
+        "CI-friendly orchestration"
+      ],
+      "workflow": [
+        "Use RunUAT RunUnreal.",
+        "Start with BootTest/EditorAutomation.",
+        "Add server-client tests for networking.",
+        "Collect artifacts/logs and fail CI on test failures."
+      ],
+      "codex": "Codex can generate/update Gauntlet scripts and interpret failures after builds.",
+      "caution": "Functional tests alone cannot validate every multi-instance replication scenario; Gauntlet fills that gap.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/running-gauntlet-tests-in-unreal-engine",
+      "slug": "gauntlet",
+      "html": "docs/html/tools/gauntlet.html"
+    },
+    {
+      "id": "screenshot-testing",
+      "title": "Screenshot Comparison Testing",
+      "category": "Testing & QA",
+      "kind": "official-method",
+      "priority": "Medium",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Automated image comparison for catching rendering/UI regressions.",
+      "why": [
+        "Visual regression detection",
+        "Useful for UI/material/lighting changes",
+        "Objective before/after evidence",
+        "Can catch subtle unintended changes"
+      ],
+      "workflow": [
+        "Create deterministic test scenes.",
+        "Capture approved baselines.",
+        "Run screenshot tests in controlled settings.",
+        "Review tolerances and intentional updates carefully."
+      ],
+      "codex": "After visual changes, Codex can run the test and surface failing comparisons for human review.",
+      "caution": "Rendering differences across hardware/drivers can create noise; control the environment.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/automation-test-framework-in-unreal-engine",
+      "slug": "screenshot-testing",
+      "html": "docs/html/tools/screenshot-testing.html"
+    },
+    {
+      "id": "visual-logger",
+      "title": "Visual Logger",
+      "category": "Debugging & Profiling",
+      "kind": "official-tool",
+      "priority": "High",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Time-based debugging tool that records gameplay events, text, locations, shapes and actor state.",
+      "why": [
+        "Excellent AI/gameplay debugging",
+        "Spatial timeline",
+        "Works well for AI/navigation",
+        "Reconstructs what happened before a bug"
+      ],
+      "workflow": [
+        "Add focused UE_VLOG/Visual Logger data.",
+        "Reproduce the issue.",
+        "Inspect the timeline and spatial snapshots.",
+        "Convert recurring manual diagnosis into automated assertions where possible."
+      ],
+      "codex": "Codex can add targeted logging instrumentation and reason from exported logs/screenshots.",
+      "caution": "Log only meaningful state; excessive logging makes sessions hard to read.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/visual-logger-in-unreal-engine",
+      "slug": "visual-logger",
+      "html": "docs/html/tools/visual-logger.html"
+    },
+    {
+      "id": "gameplay-debugger",
+      "title": "Gameplay Debugger",
+      "category": "Debugging & Profiling",
+      "kind": "official-tool",
+      "priority": "High",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "In-game overlay/debug categories for AI, navigation, behavior and custom gameplay state.",
+      "why": [
+        "Live gameplay introspection",
+        "Custom categories",
+        "Great for AI/abilities",
+        "Faster than opening many editor panels"
+      ],
+      "workflow": [
+        "Enable useful built-in categories.",
+        "Add project-specific categories for complex systems.",
+        "Keep expensive collection code guarded.",
+        "Use it during PIE/network debugging."
+      ],
+      "codex": "Codex can add custom debugger categories for systems it builds so future debugging is easier.",
+      "caution": "Developer-only instrumentation should not become shipping runtime overhead.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/using-the-gameplay-debugger-in-unreal-engine",
+      "slug": "gameplay-debugger",
+      "html": "docs/html/tools/gameplay-debugger.html"
+    },
+    {
+      "id": "unreal-insights",
+      "title": "Unreal Insights",
+      "category": "Debugging & Profiling",
+      "kind": "official-tool",
+      "priority": "Must adopt",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Unreal's trace analysis suite for CPU, frame timing, tasks, loading and subsystem performance.",
+      "why": [
+        "Find real bottlenecks",
+        "Trace async/task behavior",
+        "Frame timing",
+        "Evidence-based optimization"
+      ],
+      "workflow": [
+        "Capture a representative trace.",
+        "Identify the expensive frame/thread/span.",
+        "Form a specific hypothesis.",
+        "Optimize one issue.",
+        "Capture again and compare."
+      ],
+      "codex": "Provide trace findings to Codex so it optimizes measured hotspots instead of guessing.",
+      "caution": "Do not optimize from anecdotes; profile representative builds and scenarios.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-insights-in-unreal-engine",
+      "slug": "unreal-insights",
+      "html": "docs/html/tools/unreal-insights.html"
+    },
+    {
+      "id": "memory-insights",
+      "title": "Memory Insights",
+      "category": "Debugging & Profiling",
+      "kind": "official-tool",
+      "priority": "High",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Allocation/lifetime analysis inside Unreal Insights for memory leaks, growth and expensive allocation patterns.",
+      "why": [
+        "Track allocations",
+        "Find leaks/lifetime issues",
+        "Understand asset/runtime memory",
+        "Useful before platform memory certification"
+      ],
+      "workflow": [
+        "Capture memory traces in the problematic scenario.",
+        "Compare snapshots/timelines.",
+        "Group by callstack/tag.",
+        "Fix ownership/loading issue.",
+        "Re-run and verify."
+      ],
+      "codex": "Codex can analyze summarized allocation hotspots and adjust ownership/loading logic.",
+      "caution": "Memory traces can be large; capture focused sessions.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/memory-insights-in-unreal-engine",
+      "slug": "memory-insights",
+      "html": "docs/html/tools/memory-insights.html"
+    },
+    {
+      "id": "network-insights",
+      "title": "Networking Insights",
+      "category": "Debugging & Profiling",
+      "kind": "official-tool",
+      "priority": "Must adopt for multiplayer",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Detailed network traffic profiling inside Unreal Insights.",
+      "why": [
+        "RPC/property bandwidth",
+        "Replication diagnosis",
+        "Network traffic timelines",
+        "Better than guessing from lag"
+      ],
+      "workflow": [
+        "Capture a networked session.",
+        "Inspect traffic by actor/property/RPC.",
+        "Find spikes or excessive replication.",
+        "Adjust frequency/relevancy/data shape.",
+        "Repeat trace."
+      ],
+      "codex": "Use as evidence when Codex refactors replicated Blueprints/C++.",
+      "caution": "Always profile realistic player counts and network conditions.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/testing-and-debugging-networked-games-in-unreal-engine",
+      "slug": "network-insights",
+      "html": "docs/html/tools/network-insights.html"
+    },
+    {
+      "id": "stat-commands",
+      "title": "Stat Commands & Console Profiling",
+      "category": "Debugging & Profiling",
+      "kind": "official-method",
+      "priority": "High",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Fast first-pass profiling using stat unit, stat game, stat gpu and related console diagnostics.",
+      "why": [
+        "Zero-setup performance check",
+        "Quick CPU/GPU split",
+        "Useful during PIE",
+        "Guides when to open deeper Insights/GPU tools"
+      ],
+      "workflow": [
+        "Start with stat unit.",
+        "Identify CPU vs GPU bound.",
+        "Use targeted stat groups.",
+        "Move to Unreal Insights/GPU profiling for deep diagnosis."
+      ],
+      "codex": "Codex can include performance console-command checklists in feature verification.",
+      "caution": "Stats are snapshots/aggregates; use trace tools for deep causal analysis.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/stat-commands-in-unreal-engine",
+      "slug": "stat-commands",
+      "html": "docs/html/tools/stat-commands.html"
+    },
+    {
+      "id": "blueprint-debugger",
+      "title": "Blueprint Debugger",
+      "category": "Debugging & Profiling",
+      "kind": "official-tool",
+      "priority": "Must adopt",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Pauses Blueprint execution in PIE/SIE with breakpoints, watches, call stacks and step controls.",
+      "why": [
+        "Inspect runtime pin and variable values",
+        "Step through visual execution instead of guessing",
+        "See breakpoints, watches and execution trace in one place",
+        "Debug a specific Blueprint instance in PIE"
+      ],
+      "workflow": [
+        "Select the Blueprint instance in Debug Object.",
+        "Place a breakpoint on the suspicious node.",
+        "Run PIE/SIE and reproduce the issue.",
+        "Inspect watches/pins and step through execution.",
+        "Fix the graph, compile, and reproduce again."
+      ],
+      "codex": "Codex should use MCP-readable state/logging when available, while this remains the human runtime truth tool for complex visual execution bugs.",
+      "caution": "Pin values are only meaningful after the relevant nodes have executed.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/blueprint-debugger-in-unreal-engine",
+      "slug": "blueprint-debugger",
+      "html": "docs/html/tools/blueprint-debugger.html"
+    },
+    {
+      "id": "reference-viewer",
+      "title": "Reference Viewer",
+      "category": "Assets & Pipeline",
+      "kind": "official-tool",
+      "priority": "Must adopt",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Visualizes asset dependencies and referencers.",
+      "why": [
+        "Find accidental hard references",
+        "Safe asset deletion/refactor",
+        "Dependency analysis",
+        "Essential for Blueprint load-chain review"
+      ],
+      "workflow": [
+        "Open around suspicious assets.",
+        "Inspect both dependencies and referencers.",
+        "Look for unexpected cross-feature references.",
+        "Replace hard references with soft/data-driven relationships where appropriate."
+      ],
+      "codex": "Our MCP project tools should expose the same dependency data in machine-readable form.",
+      "caution": "A dependency is not automatically a problem; optimize based on ownership/loading goals.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/reference-viewer-in-unreal-engine",
+      "slug": "reference-viewer",
+      "html": "docs/html/tools/reference-viewer.html"
+    },
+    {
+      "id": "asset-manager",
+      "title": "Asset Manager & Primary Assets",
+      "category": "Assets & Pipeline",
+      "kind": "official-system",
+      "priority": "High",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Framework for explicit asset discovery, loading, bundles, auditing, cooking and chunking.",
+      "why": [
+        "Scalable content loading",
+        "Primary Asset IDs",
+        "Soft-reference workflows",
+        "Packaging/chunk control"
+      ],
+      "workflow": [
+        "Define Primary Asset types.",
+        "Use soft references for loadable content.",
+        "Configure scan rules.",
+        "Audit bundles/chunks.",
+        "Load/unload through Asset Manager rather than ad-hoc global hard references."
+      ],
+      "codex": "Codex should prefer Asset Manager patterns for large inventories, abilities, maps, cosmetics and downloadable content.",
+      "caution": "Do not introduce Asset Manager complexity for a tiny fixed-content prototype without need.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/asset-management-in-unreal-engine",
+      "slug": "asset-manager",
+      "html": "docs/html/tools/asset-manager.html"
+    },
+    {
+      "id": "data-registries",
+      "title": "Data Registries",
+      "category": "Assets & Pipeline",
+      "kind": "official-system",
+      "priority": "Evaluate",
+      "ue": "5.8",
+      "status": "Official plugin",
+      "summary": "Global read-only data access layer that can combine tables/curves and support caching/async access.",
+      "why": [
+        "Centralized data access",
+        "Data-driven gameplay",
+        "Multiple data sources",
+        "Useful for large configurable catalogs"
+      ],
+      "workflow": [
+        "Use for shared read-only structured gameplay data.",
+        "Define registry types and sources.",
+        "Keep session/player mutable state elsewhere.",
+        "Validate row identifiers and schemas."
+      ],
+      "codex": "Useful when building scalable item/config/stat catalogs without hard-coding data in Blueprints.",
+      "caution": "Not a replacement for SaveGame/session state.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/data-registries-in-unreal-engine",
+      "slug": "data-registries",
+      "html": "docs/html/tools/data-registries.html"
+    },
+    {
+      "id": "asset-metadata",
+      "title": "Asset Metadata",
+      "category": "Assets & Pipeline",
+      "kind": "official-method",
+      "priority": "Medium",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Editor-only key/value metadata attached to Unreal assets for ownership, workflow and pipeline information.",
+      "why": [
+        "Track owner/status/source",
+        "Filter in Content Browser",
+        "Pipeline automation",
+        "Good for AI-generated asset audit tags"
+      ],
+      "workflow": [
+        "Define a small metadata schema.",
+        "Write metadata during imports/tools.",
+        "Use it for search/validation, not runtime gameplay.",
+        "Avoid duplicating authoritative gameplay data."
+      ],
+      "codex": "Tag generated/modified assets with optional workflow metadata for later audits.",
+      "caution": "Metadata is editor/pipeline data and is not intended as runtime gameplay state.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/asset-metadata-in-unreal-engine",
+      "slug": "asset-metadata",
+      "html": "docs/html/tools/asset-metadata.html"
+    },
+    {
+      "id": "derived-data-cache",
+      "title": "Derived Data Cache (DDC)",
+      "category": "Assets & Pipeline",
+      "kind": "official-system",
+      "priority": "High for teams",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Caches derived/cooked representations so shaders and assets do not rebuild unnecessarily.",
+      "why": [
+        "Faster editor startup",
+        "Faster shader/content iteration",
+        "Shared team cache",
+        "CI speed"
+      ],
+      "workflow": [
+        "Use local DDC for every developer.",
+        "Configure a shared cache for teams/build machines.",
+        "Keep cache outside Git.",
+        "Monitor misses when iteration becomes unexpectedly slow."
+      ],
+      "codex": "Infrastructure guidance: never commit DDC; diagnose build slowness before changing game code.",
+      "caution": "DDC is disposable cache, not source-of-truth content.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/using-derived-data-cache-in-unreal-engine",
+      "slug": "derived-data-cache",
+      "html": "docs/html/tools/derived-data-cache.html"
+    },
+    {
+      "id": "zen-storage",
+      "title": "Zen Storage Server",
+      "category": "Assets & Pipeline",
+      "kind": "official-system",
+      "priority": "Evaluate for teams",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Epic storage/cache service used by modern Unreal workflows including derived-data distribution.",
+      "why": [
+        "Team cache infrastructure",
+        "Can improve shared content workflows",
+        "Designed for Unreal data",
+        "Useful for build farms"
+      ],
+      "workflow": [
+        "Adopt when team/build infrastructure justifies it.",
+        "Keep developer setup scripted.",
+        "Monitor storage and cache health.",
+        "Document fallback behavior."
+      ],
+      "codex": "Infrastructure layer rather than gameplay tool; Codex can maintain setup scripts/docs.",
+      "caution": "Adds operational complexity; small solo projects may not benefit.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/set-up-zen-storage-server-as-shared-ddc-for-unreal-engine",
+      "slug": "zen-storage",
+      "html": "docs/html/tools/zen-storage.html"
+    },
+    {
+      "id": "asset-audit-size-map",
+      "title": "Asset Audit + Size Map",
+      "category": "Assets & Pipeline",
+      "kind": "official-tool",
+      "priority": "High",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Built-in asset footprint and dependency-size inspection for identifying oversized content and expensive dependency trees.",
+      "why": [
+        "Find unexpectedly large assets",
+        "See dependency size visually",
+        "Export Asset Audit data for analysis",
+        "Catch package/cook footprint problems before release"
+      ],
+      "workflow": [
+        "Enable AssetManagerEditor when required.",
+        "Open Size Map from an asset/folder or Reference Viewer.",
+        "Open Audit Assets for detailed asset information.",
+        "Prioritize the largest unexpected dependencies and verify again after optimization."
+      ],
+      "codex": "A future MCP wrapper can export audit data to structured JSON/CSV so Codex can rank size regressions automatically.",
+      "caution": "Editor Size Map is an approximation of asset footprint; packaged/cooked size can differ due to compression and cooking.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/reference-viewer-in-unreal-engine",
+      "slug": "asset-audit-size-map",
+      "html": "docs/html/tools/asset-audit-size-map.html"
+    },
+    {
+      "id": "virtual-assets",
+      "title": "Virtual Assets",
+      "category": "Assets & Pipeline",
+      "kind": "official-system",
+      "priority": "Evaluate for large teams",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Separates bulky asset payload data from lightweight package metadata so source-control syncs can become much smaller.",
+      "why": [
+        "Reduces workstation disk usage",
+        "Can shorten source-control sync time for large projects",
+        "Downloads heavy payloads on demand",
+        "Pairs with shared DDC infrastructure"
+      ],
+      "workflow": [
+        "Measure whether source-control payload size is a real bottleneck.",
+        "Review backend/source-control requirements.",
+        "Configure shared DDC/virtualization on a test project first.",
+        "Virtualize supported assets and measure sync/editor behavior before team rollout."
+      ],
+      "codex": "Treat as infrastructure configuration, not a per-asset mutation trick. Codex can audit configuration and rollout scripts.",
+      "caution": "The documented quickstart assumes specific source-control/DDC infrastructure; do not enable blindly for a small Git project.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/virtual-assets-in-unreal-engine",
+      "slug": "virtual-assets",
+      "html": "docs/html/tools/virtual-assets.html"
+    },
+    {
+      "id": "asset-redirectors-fixup",
+      "title": "Redirector Cleanup / Fix Up Redirectors",
+      "category": "Assets & Pipeline",
+      "kind": "official-method",
+      "priority": "Must adopt",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Repairs references left behind when assets are moved or renamed and removes obsolete redirector objects.",
+      "why": [
+        "Prevents stale asset paths accumulating",
+        "Makes large refactors safer",
+        "Can run interactively or through ResavePackages commandlet",
+        "Keeps Content folders and automation predictable"
+      ],
+      "workflow": [
+        "After a controlled asset move/rename, inspect redirectors.",
+        "Use Fixup Redirectors in the Content Browser for local work.",
+        "For project-wide maintenance, use the ResavePackages commandlet with FixupRedirectors in a clean branch.",
+        "Validate references and commit all resulting asset changes together."
+      ],
+      "codex": "Codex may prepare and run a controlled commandlet workflow, but must inspect git status and never mass-resave the project silently.",
+      "caution": "Project-wide fixup can touch many binary assets. Run on a clean branch/worktree and review the resulting source-control diff.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/asset-redirectors-in-unreal-engine",
+      "slug": "asset-redirectors-fixup",
+      "html": "docs/html/tools/asset-redirectors-fixup.html"
+    },
+    {
+      "id": "git-lfs-locking",
+      "title": "Git LFS + File Locking Workflow",
+      "category": "Source Control & CI",
+      "kind": "method",
+      "priority": "Must adopt with Git/Azure",
+      "ue": "all",
+      "status": "Standard workflow",
+      "summary": "Store .uasset/.umap in Git LFS and lock binary assets that cannot be merged safely.",
+      "why": [
+        "Keeps Git repository healthy",
+        "Prevents simultaneous binary edits",
+        "Fits Azure Repos/Git workflows",
+        "Makes asset ownership explicit"
+      ],
+      "workflow": [
+        "Track .uasset/.umap with LFS.",
+        "Mark them lockable.",
+        "Lock before edit.",
+        "Pull/rebase before work.",
+        "Unlock after successful push.",
+        "Never attempt text merges of binary assets."
+      ],
+      "codex": "Before mutating a binary asset, verify repository cleanliness and lock/ownership policy; never auto-force conflicts.",
+      "caution": "LFS alone does not prevent merge conflicts; locking discipline matters.",
+      "source": "https://learn.microsoft.com/en-us/azure/devops/repos/git/manage-large-files",
+      "slug": "git-lfs-locking",
+      "html": "docs/html/tools/git-lfs-locking.html"
+    },
+    {
+      "id": "projectborealis-uegitplugin",
+      "title": "Project Borealis UEGitPlugin",
+      "category": "Source Control & CI",
+      "kind": "external-repo",
+      "priority": "Evaluate carefully",
+      "ue": "historically UE5; current issues exist",
+      "status": "Community / MIT",
+      "summary": "Refactored Unreal Git/LFS source-control provider with file locking and status-branch workflow improvements.",
+      "why": [
+        "In-editor LFS locks",
+        "Git-aware asset workflow",
+        "Status branches",
+        "Production-oriented source-control improvements"
+      ],
+      "workflow": [
+        "Evaluate on a disposable UE 5.8 project first.",
+        "Use HTTPS/Git Credential Manager.",
+        "Adopt explicit .gitattributes.",
+        "Keep CLI Git as the source-of-truth fallback."
+      ],
+      "codex": "Useful if the team wants editor-native locks, but Codex can operate Git from CLI without requiring this plugin.",
+      "caution": "Open issues report compatibility/usability problems in newer UE versions; do not make it mandatory until tested on 5.8.",
+      "source": "https://github.com/ProjectBorealis/UEGitPlugin",
+      "slug": "projectborealis-uegitplugin",
+      "html": "docs/html/tools/projectborealis-uegitplugin.html"
+    },
+    {
+      "id": "commandlets-ci",
+      "title": "Unreal Commandlets in CI",
+      "category": "Source Control & CI",
+      "kind": "method",
+      "priority": "Must adopt",
+      "ue": "5.x",
+      "status": "Official workflow",
+      "summary": "Run validation, resave, cook and other editor operations headlessly through UnrealEditor-Cmd/commandlets.",
+      "why": [
+        "Repeatable CI checks",
+        "No manual editor dependency",
+        "Asset validation at scale",
+        "Good merge gate"
+      ],
+      "workflow": [
+        "Start with DataValidation commandlet.",
+        "Add targeted project commandlets only for deterministic tasks.",
+        "Fail CI on errors.",
+        "Archive logs/reports."
+      ],
+      "codex": "Codex should produce CI commands alongside new validators/tools so every guardrail is automatable.",
+      "caution": "Headless/commandlet execution can differ from interactive editor paths; test both where relevant.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/data-validation-in-unreal-engine",
+      "slug": "commandlets-ci",
+      "html": "docs/html/tools/commandlets-ci.html"
+    },
+    {
+      "id": "buildgraph",
+      "title": "BuildGraph",
+      "category": "Source Control & CI",
+      "kind": "official-system",
+      "priority": "High for build automation",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Epic's XML-based build orchestration layer on top of Unreal Automation Tool.",
+      "why": [
+        "Build pipelines",
+        "Reusable build nodes",
+        "Parallelizable automation",
+        "Good for cook/package/test flows"
+      ],
+      "workflow": [
+        "Keep BuildGraph scripts in source control.",
+        "Separate build, test, cook and publish nodes.",
+        "Parameterize platform/configuration.",
+        "Run on dedicated build machines."
+      ],
+      "codex": "Codex can update BuildGraph definitions when project build/test requirements change.",
+      "caution": "Start simple; do not build an enterprise pipeline before the project needs it.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/buildgraph-for-unreal-engine",
+      "slug": "buildgraph",
+      "html": "docs/html/tools/buildgraph.html"
+    },
+    {
+      "id": "clean-build-cook-package",
+      "title": "Clean Build / Cook / Package Verification",
+      "category": "Source Control & CI",
+      "kind": "method",
+      "priority": "Must adopt before releases",
+      "ue": "5.x",
+      "status": "Workflow",
+      "summary": "Regularly validate the project outside the warm developer editor: clean build, cook and package.",
+      "why": [
+        "Catches hidden local-state dependencies",
+        "Finds missing asset references",
+        "Verifies shipping configuration",
+        "Prevents last-minute packaging surprises"
+      ],
+      "workflow": [
+        "Run clean Editor build periodically.",
+        "Cook target platforms.",
+        "Package Development/Shipping candidates.",
+        "Launch packaged build.",
+        "Run smoke/automation tests."
+      ],
+      "codex": "A task is not release-ready merely because PIE works; Codex should report clean build/cook/package status separately.",
+      "caution": "Live Coding success is insufficient evidence for release readiness.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/packaging-unreal-engine-projects",
+      "slug": "clean-build-cook-package",
+      "html": "docs/html/tools/clean-build-cook-package.html"
+    },
+    {
+      "id": "horde",
+      "title": "Horde",
+      "category": "Source Control & CI",
+      "kind": "official-system",
+      "priority": "Evaluate for teams",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Epic infrastructure for build automation, remote execution, test automation, studio analytics and device farms.",
+      "why": [
+        "CI/CD designed around Unreal workflows",
+        "Automation/Gauntlet test aggregation",
+        "Remote compute and build acceleration",
+        "Device allocation for mobile/console testing"
+      ],
+      "workflow": [
+        "Start only when project/team scale justifies dedicated infrastructure.",
+        "Pilot Horde locally or on a small server.",
+        "Connect agents and one build/test stream.",
+        "Add auth, observability and resource pools before broader rollout."
+      ],
+      "codex": "Codex can author BuildGraph/Horde config and inspect logs/results, but infrastructure changes should remain reviewed.",
+      "caution": "Horde is powerful and operationally heavier than a simple Azure/GitHub pipeline; do not adopt merely because it exists.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/horde-in-unreal-engine",
+      "slug": "horde",
+      "html": "docs/html/tools/horde.html"
+    },
+    {
+      "id": "unreal-build-accelerator",
+      "title": "Unreal Build Accelerator (UBA)",
+      "category": "Source Control & CI",
+      "kind": "official-system",
+      "priority": "High for C++ teams",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Accelerates C++ compilation locally and, with Horde, can distribute build actions across remote machines.",
+      "why": [
+        "Reduces iteration time on large C++ codebases",
+        "UBT integrates directly with UBA",
+        "Remote compilation can use otherwise idle machines",
+        "Especially useful once full editor builds become a productivity bottleneck"
+      ],
+      "workflow": [
+        "Measure local clean/incremental build times first.",
+        "Enable/tune UBA using UBT configuration.",
+        "For remote acceleration, configure Horde agents and secure access.",
+        "Track build reliability and speed before expanding the pool."
+      ],
+      "codex": "Codex can inspect BuildConfiguration and build logs, but should not alter distributed-build infrastructure without an explicit task.",
+      "caution": "Remote build support/platform details evolve by engine release; follow the exact UE 5.8 documentation and secure Horde authentication.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/horde-unreal-build-accelerator-and-remote-compilation-tutorial-for-unreal-engine",
+      "slug": "unreal-build-accelerator",
+      "html": "docs/html/tools/unreal-build-accelerator.html"
+    },
+    {
+      "id": "azure-devops-unreal-ci",
+      "title": "Azure DevOps CI for Unreal",
+      "category": "Source Control & CI",
+      "kind": "method",
+      "priority": "High when Azure hosts the game repo",
+      "ue": "all",
+      "status": "Recommended pattern",
+      "summary": "Use an Azure Pipelines self-hosted build machine with Unreal installed to run validation, UBT/UAT, cook, package and test jobs.",
+      "why": [
+        "Keeps the Unreal build environment under your control",
+        "Machine-level engine/cache state persists across jobs",
+        "Fits Azure Repos and branch policies",
+        "Can publish packaged builds/test artifacts automatically"
+      ],
+      "workflow": [
+        "Provision a dedicated self-hosted Windows agent with the exact Unreal version/toolchain.",
+        "Checkout Git LFS correctly.",
+        "Run lightweight validation first, then UBT/UAT build/cook/test stages.",
+        "Cache/use shared DDC where appropriate.",
+        "Publish logs, test reports and packaged artifacts; gate protected branches on required jobs."
+      ],
+      "codex": "Codex can author/maintain azure-pipelines.yml and project build scripts, while engine credentials/signing secrets stay in secure variables.",
+      "caution": "Microsoft-hosted agents are usually a poor fit for large Unreal builds because the engine/toolchain/cache is heavy; prefer self-hosted agents for repeatable production builds.",
+      "source": "https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/agents?view=azure-devops",
+      "slug": "azure-devops-unreal-ci",
+      "html": "docs/html/tools/azure-devops-unreal-ci.html"
+    },
+    {
+      "id": "multi-user-editing",
+      "title": "Multi-User Editing",
+      "category": "Source Control & CI",
+      "kind": "official-tool",
+      "priority": "Optional collaboration accelerator",
+      "ue": "5.8",
+      "status": "Beta",
+      "summary": "Connects multiple Unreal Editor instances into a shared live editing session for real-time collaborative content work.",
+      "why": [
+        "Multiple people can work together in the same world",
+        "Immediate transaction synchronization",
+        "Useful for review sessions, level dressing and collaborative iteration",
+        "Works on top of a defined source-control revision"
+      ],
+      "workflow": [
+        "Make every participant sync the exact same project revision and engine version.",
+        "Launch/join a short-lived Multi-User session on LAN/VPN.",
+        "Collaborate live.",
+        "At session end, persist and commit the agreed changes through normal source control."
+      ],
+      "codex": "Mostly a human collaboration tool; Codex should understand that the live session does not replace source control and should avoid conflicting automated writes during a session.",
+      "caution": "Epic explicitly positions Multi-User Editing as an addition to source control, not a replacement. Keep sessions short-lived and start from the same revision.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/multi-user-editing-overview-for-unreal-engine",
+      "slug": "multi-user-editing",
+      "html": "docs/html/tools/multi-user-editing.html"
+    },
+    {
+      "id": "one-file-per-actor",
+      "title": "One File Per Actor (OFPA)",
+      "category": "Source Control & CI",
+      "kind": "official-system",
+      "priority": "High for shared levels",
+      "ue": "5.8",
+      "status": "Official",
+      "summary": "Stores level Actor instance data in external files so different team members can modify different Actors without constantly touching the main level file.",
+      "why": [
+        "Reduces source-control contention on large levels",
+        "Enabled by default with World Partition",
+        "Makes parallel world editing more practical",
+        "Cooked builds still embed Actors normally"
+      ],
+      "workflow": [
+        "Use World Partition or enable OFPA for the target level.",
+        "Keep actor edits scoped and review source-control changes carefully.",
+        "Use locks/source-control discipline for assets that remain indivisible.",
+        "Validate level load/cook after large structural changes."
+      ],
+      "codex": "When editing level actors, Codex should understand OFPA-generated files as engine-owned content and avoid renaming/manipulating them directly on disk.",
+      "caution": "OFPA helps actor-level contention but does not make arbitrary .uasset files mergeable.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/one-file-per-actor-in-unreal-engine",
+      "slug": "one-file-per-actor",
+      "html": "docs/html/tools/one-file-per-actor.html"
+    },
+    {
+      "id": "collaboration-source-control-strategy",
+      "title": "Unreal Collaboration Strategy: Git LFS + Locks + Short-Lived Branches",
+      "category": "Source Control & CI",
+      "kind": "method",
+      "priority": "Must adopt with Git",
+      "ue": "all",
+      "status": "Recommended pattern",
+      "summary": "A practical team policy for binary Unreal content: LFS storage, explicit locks for non-mergeable assets, small branches and frequent synchronization.",
+      "why": [
+        "Reduces conflicting .uasset/.umap edits",
+        "Keeps binary history out of normal Git object storage",
+        "Makes ownership of currently edited assets visible",
+        "Encourages smaller, reviewable changes"
+      ],
+      "workflow": [
+        "Track Unreal binary assets with Git LFS before adding them.",
+        "Lock high-conflict binary assets before editing.",
+        "Pull/rebase before starting significant asset work.",
+        "Keep branches/tasks narrow and integrate frequently.",
+        "Never resolve a binary merge by guessing; choose one asset revision or merge using Unreal-aware tooling when supported."
+      ],
+      "codex": "Before modifying binary assets, Codex should inspect source-control status/locks and avoid parallel edits to the same asset.",
+      "caution": "LFS does not make binary assets mergeable. Coordination and locking remain necessary.",
+      "source": "https://learn.microsoft.com/en-us/azure/devops/repos/git/manage-large-files?view=azure-devops",
+      "slug": "collaboration-source-control-strategy",
+      "html": "docs/html/tools/collaboration-source-control-strategy.html"
+    },
+    {
+      "id": "gameplay-tags",
+      "title": "Gameplay Tags",
+      "category": "Gameplay Architecture",
+      "kind": "official-system",
+      "priority": "Must adopt for scalable gameplay",
+      "ue": "5.x",
+      "status": "Official",
+      "summary": "Hierarchical identifiers for gameplay state, categories, abilities, effects and cross-system queries.",
+      "why": [
+        "Avoid string/enumeration sprawl",
+        "Works with GAS and other systems",
+        "Data-driven queries",
+        "Great decoupling primitive"
+      ],
+      "workflow": [
+        "Define a naming hierarchy.",
+        "Use tags for semantic state/categories, not arbitrary data.",
+        "Centralize native/common tags.",
+        "Validate references and avoid near-duplicate meanings."
+      ],
+      "codex": "Prefer Gameplay Tags when multiple systems need a shared semantic vocabulary.",
+      "caution": "Tags can become an ungoverned global namespace; maintain conventions.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/using-gameplay-tags-in-unreal-engine",
+      "slug": "gameplay-tags",
+      "html": "docs/html/tools/gameplay-tags.html"
+    },
+    {
+      "id": "enhanced-input",
+      "title": "Enhanced Input",
+      "category": "Gameplay Architecture",
+      "kind": "official-system",
+      "priority": "Must adopt",
+      "ue": "5.8",
+      "status": "Official plugin",
+      "summary": "Asset-based input actions, triggers, modifiers and mapping contexts for contextual/remappable controls.",
+      "why": [
+        "Runtime remapping",
+        "Contextual input",
+        "Chorded/triggers/modifiers",
+        "Cleaner than monolithic input graphs"
+      ],
+      "workflow": [
+        "Create Input Actions.",
+        "Group bindings in Mapping Contexts.",
+        "Add/remove contexts by player state.",
+        "Keep gameplay actions separate from physical keys.",
+        "Test keyboard/gamepad/device switching."
+      ],
+      "codex": "Codex can create consistent input assets/handlers once corresponding MCP asset tools exist.",
+      "caution": "Avoid binding gameplay logic directly to raw keys throughout Blueprints.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/enhanced-input-in-unreal-engine",
+      "slug": "enhanced-input",
+      "html": "docs/html/tools/enhanced-input.html"
+    },
+    {
+      "id": "common-ui",
+      "title": "Common UI",
+      "category": "Gameplay Architecture",
+      "kind": "official-system",
+      "priority": "High for controller/multiplatform UI",
+      "ue": "5.8",
+      "status": "Official plugin",
+      "summary": "Layered UI/input framework designed for complex game menus and multi-input navigation.",
+      "why": [
+        "Controller-first navigation",
+        "Input routing",
+        "Activatable widget stacks",
+        "Cross-platform UI conventions"
+      ],
+      "workflow": [
+        "Use Activatable Widgets for screens.",
+        "Define UI layers/stacks.",
+        "Integrate with the current UE 5.8 input model.",
+        "Test keyboard/gamepad focus and back/accept behavior."
+      ],
+      "codex": "Useful target architecture for menu-heavy games instead of ad-hoc widget creation/removal.",
+      "caution": "Adopt for real navigation complexity; simple HUD-only games may not need it.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/common-ui-plugin-for-advanced-user-interfaces-in-unreal-engine",
+      "slug": "common-ui",
+      "html": "docs/html/tools/common-ui.html"
+    },
+    {
+      "id": "statetree",
+      "title": "StateTree",
+      "category": "Gameplay Architecture",
+      "kind": "official-system",
+      "priority": "High",
+      "ue": "5.8",
+      "status": "Official plugin",
+      "summary": "Hierarchical state machine combining state-machine transitions with selector-style hierarchy.",
+      "why": [
+        "Cleaner AI/state logic",
+        "Highly organized",
+        "Efficient",
+        "UE 5.8 improved authoring/compiler workflows"
+      ],
+      "workflow": [
+        "Use for stateful decision logic.",
+        "Keep tasks small.",
+        "Use Evaluators for contextual data.",
+        "Define explicit transitions.",
+        "Avoid replacing simple booleans with a StateTree unnecessarily."
+      ],
+      "codex": "Strong candidate for AI/NPC/interactable state systems; we should add dedicated read/write MCP support.",
+      "caution": "StateTree is an architecture choice, not a universal replacement for Behavior Trees or simple state variables.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/overview-of-state-tree-in-unreal-engine",
+      "slug": "statetree",
+      "html": "docs/html/tools/statetree.html"
+    },
+    {
+      "id": "gameplay-ability-system",
+      "title": "Gameplay Ability System (GAS)",
+      "category": "Gameplay Architecture",
+      "kind": "official-system",
+      "priority": "High for combat/RPG/multiplayer",
+      "ue": "5.8",
+      "status": "Official plugin",
+      "summary": "Framework for abilities, attributes, effects, cues, costs, cooldowns, replication and prediction.",
+      "why": [
+        "Scalable combat/ability architecture",
+        "Built-in replication/prediction",
+        "Data-driven effects",
+        "Reusable ability tasks"
+      ],
+      "workflow": [
+        "Put ASC ownership in the correct Actor/PlayerState.",
+        "Define Attribute Sets.",
+        "Use Gameplay Effects for modifications.",
+        "Use Gameplay Tags for conditions/state.",
+        "Keep abilities focused and composable."
+      ],
+      "codex": "When the game has substantial combat/abilities, prefer GAS over custom one-off cooldown/buff systems.",
+      "caution": "GAS has a learning/architecture cost; do not add it to a tiny prototype without need.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/gameplay-ability-system-for-unreal-engine",
+      "slug": "gameplay-ability-system",
+      "html": "docs/html/tools/gameplay-ability-system.html"
+    },
+    {
+      "id": "game-features",
+      "title": "Game Features / Modular Gameplay",
+      "category": "Gameplay Architecture",
+      "kind": "official-system",
+      "priority": "Evaluate for modular/live games",
+      "ue": "5.x",
+      "status": "Official plugin",
+      "summary": "Feature-plugin approach for modular gameplay content that can be activated/deactivated independently.",
+      "why": [
+        "Feature isolation",
+        "DLC/live content patterns",
+        "Reduces giant monolithic modules",
+        "Useful for teams working on parallel game features"
+      ],
+      "workflow": [
+        "Keep a feature's content/code/data inside its feature plugin.",
+        "Define activation actions.",
+        "Minimize cross-feature hard references.",
+        "Use shared core modules only for stable contracts."
+      ],
+      "codex": "Good architecture when Codex is tasked with an isolated feature; boundaries make changes safer.",
+      "caution": "Adds project structure complexity; not required for every small game.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/game-features-and-modular-gameplay-in-unreal-engine",
+      "slug": "game-features",
+      "html": "docs/html/tools/game-features.html"
+    },
+    {
+      "id": "pcg",
+      "title": "Procedural Content Generation (PCG)",
+      "category": "Gameplay Architecture",
+      "kind": "official-system",
+      "priority": "High for world/content generation",
+      "ue": "5.8",
+      "status": "Official plugin",
+      "summary": "Node-based procedural content framework for scattering, generation and data-driven environment workflows.",
+      "why": [
+        "Faster level dressing",
+        "Reusable procedural rules",
+        "Designer iteration",
+        "Can reduce repetitive placement work"
+      ],
+      "workflow": [
+        "Build small reusable PCG graphs.",
+        "Expose artist-friendly parameters.",
+        "Use deterministic seeds when needed.",
+        "Profile generated content and keep runtime/editor generation strategy explicit."
+      ],
+      "codex": "UE 5.8 includes PCG toolsets in the Toolset Registry family, making it a strong target for AI-assisted generation.",
+      "caution": "Procedural generation can hide performance/content explosion; set budgets and validate outputs.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/procedural-content-generation-framework-in-unreal-engine",
+      "slug": "pcg",
+      "html": "docs/html/tools/pcg.html"
+    },
+    {
+      "id": "mass-entity",
+      "title": "Mass Entity / Mass Framework",
+      "category": "Gameplay Architecture",
+      "kind": "official-system",
+      "priority": "Specialized",
+      "ue": "5.8",
+      "status": "Official framework",
+      "summary": "Data-oriented entity framework for large numbers of agents/entities and scalable simulation.",
+      "why": [
+        "High entity counts",
+        "Data-oriented performance",
+        "Mass AI/crowd use cases",
+        "UE 5.8 contains major framework improvements"
+      ],
+      "workflow": [
+        "Use only when actor-per-entity architecture becomes a measured bottleneck.",
+        "Model fragments/processors intentionally.",
+        "Prototype representative entity counts.",
+        "Profile before and after."
+      ],
+      "codex": "Specialized architecture; Codex should not introduce Mass unless project scale warrants it.",
+      "caution": "Higher conceptual complexity than Actors/Components; premature adoption can slow development.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/unreal-engine-5-8-release-notes",
+      "slug": "mass-entity",
+      "html": "docs/html/tools/mass-entity.html"
+    },
+    {
+      "id": "flow-oriented-blueprint-architecture",
+      "title": "Blueprint Architecture: Components, Interfaces, Dispatchers & Subsystems",
+      "category": "Gameplay Architecture",
+      "kind": "method",
+      "priority": "Must adopt",
+      "ue": "all",
+      "status": "Architecture workflow",
+      "summary": "Use composition and explicit contracts to prevent giant, tightly-coupled Blueprint classes.",
+      "why": [
+        "Smaller Blueprints",
+        "Less casting",
+        "Reusable systems",
+        "Clear ownership",
+        "Better AI-edit safety"
+      ],
+      "workflow": [
+        "Put reusable actor behavior in Actor Components.",
+        "Use Blueprint Interfaces for capability contracts.",
+        "Use Event Dispatchers for one-to-many notifications.",
+        "Use Subsystems for scoped services.",
+        "Keep widgets as presentation, not game-state owners."
+      ],
+      "codex": "Default architecture rules for generated Blueprint systems; refactor before graphs become giant.",
+      "caution": "Do not replace every direct reference with an interface/event; choose the simplest decoupling that fits ownership.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/overview-of-blueprints-visual-scripting-in-unreal-engine",
+      "slug": "flow-oriented-blueprint-architecture",
+      "html": "docs/html/tools/flow-oriented-blueprint-architecture.html"
+    },
+    {
+      "id": "cpp-blueprint-boundary",
+      "title": "C++ / Blueprint Boundary Strategy",
+      "category": "Gameplay Architecture",
+      "kind": "method",
+      "priority": "Must adopt",
+      "ue": "all",
+      "status": "Architecture workflow",
+      "summary": "Keep stable/high-performance/framework code in C++ and fast content/gameplay iteration in Blueprints.",
+      "why": [
+        "Faster iteration without Blueprint monoliths",
+        "Strong reusable APIs",
+        "Performance where needed",
+        "Designer-friendly extension"
+      ],
+      "workflow": [
+        "Put stable primitives/components/subsystems in C++.",
+        "Expose narrow Blueprint APIs.",
+        "Keep tuning/content assembly in Blueprint/Data Assets.",
+        "Move hotspots or fragile duplicated logic to C++ only when justified."
+      ],
+      "codex": "Codex should choose the lane deliberately instead of converting everything to C++ or leaving everything in Blueprint.",
+      "caution": "Avoid blueprint-only private engine reimplementations and avoid C++ for every tiny designer-tuned behavior.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/exposing-gameplay-elements-to-blueprints-visual-scripting-in-unreal-engine",
+      "slug": "cpp-blueprint-boundary",
+      "html": "docs/html/tools/cpp-blueprint-boundary.html"
+    },
+    {
+      "id": "naming-and-folder-conventions",
+      "title": "Naming & Folder Conventions",
+      "category": "Gameplay Architecture",
+      "kind": "method",
+      "priority": "Must adopt",
+      "ue": "all",
+      "status": "Team workflow",
+      "summary": "Consistent asset prefixes, feature folders and ownership boundaries make large Unreal projects searchable and automatable.",
+      "why": [
+        "Fast search",
+        "Safer bulk operations",
+        "Better validation",
+        "Codex can infer asset intent from names"
+      ],
+      "workflow": [
+        "Define prefixes for major asset types.",
+        "Organize by feature/domain first.",
+        "Avoid dumping assets into generic Misc folders.",
+        "Enforce rules with Data Validation.",
+        "Keep exceptions documented."
+      ],
+      "codex": "Naming conventions directly improve agent search precision and reduce accidental edits.",
+      "caution": "Do not over-engineer names with excessive abbreviations; optimize for team comprehension and automation.",
+      "source": "https://dev.epicgames.com/documentation/en-us/unreal-engine/recommended-asset-naming-conventions-in-unreal-engine-projects",
+      "slug": "naming-and-folder-conventions",
+      "html": "docs/html/tools/naming-and-folder-conventions.html"
+    },
+    {
+      "id": "lyra-reference-architecture",
+      "title": "Lyra Sample Game as Architecture Reference",
+      "category": "Gameplay Architecture",
+      "kind": "official-reference",
+      "priority": "High reference",
+      "ue": "5.8",
+      "status": "Official sample",
+      "summary": "Epic-maintained modular multiplayer sample demonstrating modern UE architecture including Game Features, GAS, Enhanced Input and scalable UI/gameplay patterns.",
+      "why": [
+        "Real production-style examples instead of isolated snippets",
+        "Updated across major UE releases",
+        "Shows modular gameplay feature boundaries",
+        "Strong reference for multiplayer, abilities, inventory/equipment and UI architecture"
+      ],
+      "workflow": [
+        "Install the Lyra version matching the target engine.",
+        "Study one subsystem relevant to the current feature instead of copying the whole project.",
+        "Document the pattern and why it fits your game.",
+        "Implement a smaller project-specific version and validate complexity before expanding."
+      ],
+      "codex": "Codex can use Lyra as a pattern reference, but should not cargo-cult class names or architecture that the current game does not need.",
+      "caution": "Lyra is a learning/reference project, not a mandatory starter architecture; its complexity can be excessive for small games.",
+      "source": "https://dev.epicgames.com/documentation/unreal-engine/lyra-sample-game-in-unreal-engine",
+      "slug": "lyra-reference-architecture",
+      "html": "docs/html/tools/lyra-reference-architecture.html"
+    }
+  ]
+}

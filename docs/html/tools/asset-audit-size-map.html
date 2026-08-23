@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Asset Audit + Size Map — Unreal Game Dev Toolbox</title>
+<link rel="stylesheet" href="../assets/style.css"></head>
+<body><main class="wrap">
+<div class="nav"><a href="../index.html">← Game Dev Toolbox</a> · Assets &amp; Pipeline</div>
+<div class="top"><div class="meta">
+<span class="badge">official-tool</span>
+<span class="badge">5.8</span>
+<span class="badge">Official</span>
+</div><span class="badge priority">High</span></div>
+<h1>Asset Audit + Size Map</h1>
+<p class="lead">Built-in asset footprint and dependency-size inspection for identifying oversized content and expensive dependency trees.</p>
+<div class="grid">
+<section class="card"><h2>Why it helps</h2><ul><li>Find unexpectedly large assets</li><li>See dependency size visually</li><li>Export Asset Audit data for analysis</li><li>Catch package/cook footprint problems before release</li></ul></section>
+<section class="card"><h2>Codex / MCP role</h2><p>A future MCP wrapper can export audit data to structured JSON/CSV so Codex can rank size regressions automatically.</p></section>
+</div>
+<section class="card"><h2>Recommended workflow</h2><ol><li>Enable AssetManagerEditor when required.</li><li>Open Size Map from an asset/folder or Reference Viewer.</li><li>Open Audit Assets for detailed asset information.</li><li>Prioritize the largest unexpected dependencies and verify again after optimization.</li></ol></section>
+<section class="note"><strong>Watch out:</strong> Editor Size Map is an approximation of asset footprint; packaged/cooked size can differ due to compression and cooking.</section>
+<h2>Adoption decision</h2>
+<p><strong>High</strong>. Treat this page as a project decision guide; confirm engine version, license, team scale and project constraints before adoption.</p>
+<h2>Source</h2>
+<p class="source"><a href="https://dev.epicgames.com/documentation/unreal-engine/reference-viewer-in-unreal-engine" target="_blank" rel="noreferrer">https://dev.epicgames.com/documentation/unreal-engine/reference-viewer-in-unreal-engine</a></p>
+<footer>Unreal-MCP-Tools · Game Dev Toolbox · generated 2026-08-23 · verify version-specific APIs before production adoption.</footer>
+</main></body></html>
