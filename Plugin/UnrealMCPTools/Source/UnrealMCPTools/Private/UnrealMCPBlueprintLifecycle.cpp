@@ -1,4 +1,4 @@
-#include "UnrealMCPBlueprintInternal.h"
+#include "UnrealMCPBlueprintInternalDecls.h"
 
 FMCPToolResult UUnrealMCPBlueprintToolset::CreateBlueprint(
     const FString& package_path,
