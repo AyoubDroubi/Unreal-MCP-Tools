@@ -1,0 +1,48 @@
+name: Generate Game Dev Toolbox
+
+on:
+  push:
+    branches: ["main", "feature/**"]
+    paths:
+      - "catalog/categories/**"
+      - "scripts/generate_toolbox.py"
+      - "scripts/verify_toolbox.py"
+      - ".github/workflows/generate-toolbox.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate HTML toolbox
+        run: python scripts/generate_toolbox.py
+
+      - name: Verify generated toolbox
+        run: python scripts/verify_toolbox.py
+
+      - name: Commit generated documentation
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalog/game-dev-toolbox.json docs/GAME_DEV_TOOLBOX.md docs/html/
+          if git diff --cached --quiet; then
+            echo "Generated toolbox is already up to date."
+            exit 0
+          fi
+          git commit -m "docs: regenerate game dev toolbox"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
