@@ -1,0 +1,59 @@
+{
+  "category": "Developer Environment",
+  "tools": [
+    {
+      "id": "rider-unreallink",
+      "title": "JetBrains Rider + UnrealLink / RiderLink",
+      "category": "Developer Environment",
+      "kind": "external-tool",
+      "priority": "High for C++ projects",
+      "ue": "UE5",
+      "status": "Maintained",
+      "summary": "Deep Rider/Unreal Editor integration with Blueprint awareness, code navigation, game launch control and enhanced Unreal logs.",
+      "why": [
+        "Find C++ usages from Blueprints",
+        "Navigate from C++ to the corresponding Blueprint in Unreal Editor",
+        "Run multiplayer configurations from the IDE",
+        "Use Unreal-aware inspections/refactors and filtered editor logs"
+      ],
+      "workflow": [
+        "Install/open the project in JetBrains Rider.",
+        "Install RiderLink into the game or engine when prompted.",
+        "Use Find Usages to include Blueprint-derived/reference information.",
+        "Launch PIE/server/client configurations and inspect Unreal logs directly from Rider."
+      ],
+      "codex": "Useful companion IDE when Codex edits C++; it provides human verification of reflection usage and Blueprint/C++ coupling.",
+      "caution": "Rider is a separate commercial IDE depending on your license; RiderLink should match the Rider/engine setup.",
+      "source": "https://github.com/JetBrains/UnrealLink",
+      "slug": "rider-unreallink",
+      "html": "docs/html/tools/rider-unreallink.html"
+    },
+    {
+      "id": "unreal-xist-tools",
+      "title": "UnrealXistTools",
+      "category": "Developer Environment",
+      "kind": "external-repo",
+      "priority": "High for scripted workflows",
+      "ue": "UE4/UE5",
+      "status": "Maintained / MIT",
+      "summary": "Cross-platform PowerShell 7 helpers for Unreal project discovery, UAT, clean builds, project files, IDE launch and project refactors.",
+      "why": [
+        "Wraps verbose Unreal command lines in repeatable scripts",
+        "Provides a practical clean-project command",
+        "Simplifies UAT build/cook/stage/run workflows",
+        "Works on Windows, macOS and Linux for many commands"
+      ],
+      "workflow": [
+        "Install PowerShell 7.",
+        "Clone UnrealXistTools and add it to PATH.",
+        "Use UProject.ps1/UProjectFile.ps1 for discovery.",
+        "Use UAT.ps1 for build-cook-stage flows and UProjectClean.ps1 for deliberate clean rebuilds."
+      ],
+      "codex": "Reference implementation for shell automation. We can borrow patterns or call equivalent project-local scripts rather than make Codex reconstruct UAT flags every time.",
+      "caution": "Review every cleanup/refactor command before running it on a working project; destructive switches should never be implicit.",
+      "source": "https://github.com/XistGG/UnrealXistTools",
+      "slug": "unreal-xist-tools",
+      "html": "docs/html/tools/unreal-xist-tools.html"
+    }
+  ]
+}
